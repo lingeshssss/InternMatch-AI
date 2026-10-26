@@ -1,21 +1,42 @@
+# Optional Docker path: the same single application container used in production, plus PostgreSQL.
+#   docker compose up --build        then open http://localhost:8080
+# Local AI: run Ollama natively on the Mac (Metal GPU). Inside a container, "localhost" is the container itself,
+# so the app reaches the host's Ollama through host.docker.internal, explicitly allow-listed for plain HTTP.
+# On macOS (Docker Desktop, Colima) host.docker.internal reaches services bound to the Mac's 127.0.0.1, so keep
+# Ollama on loopback (verified 2026-10-26 with Colima). On a Linux Docker host it resolves to the bridge gateway,
+# and a loopback-only Ollama is not reachable; never solve that by exposing Ollama publicly.
 services:
   postgres:
-    image: postgres:16.9-alpine
+    image: postgres:17.6-alpine
     environment:
       POSTGRES_USER: internmatch
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-internmatch}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
       POSTGRES_DB: internmatch
-    ports: ["127.0.0.1:5432:5432"]
     volumes: ["pgdata:/var/lib/postgresql/data"]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U internmatch"]
       interval: 5s
-      retries: 15
-  redis:
-    image: redis:7.4.3-alpine
-    ports: ["127.0.0.1:6379:6379"]
-    command: ["redis-server", "--appendonly", "yes"]
-    volumes: ["redisdata:/data"]
+      retries: 20
+  app:
+    build: .
+    depends_on:
+      postgres: {condition: service_healthy}
+    ports: ["127.0.0.1:8080:8080"]
+    environment:
+      APP_ENV: production
+      # Plain-HTTP localhost cannot hold the production __Host- Secure cookie; browsers treat http://localhost as a
+      # secure context, so this works locally. A public deployment must use an https:// origin.
+      APP_ORIGINS: https://localhost:8080,http://localhost:8080
+      ALLOW_INSECURE_LOCAL_ORIGIN: "true"
+      DATABASE_URL: postgresql+psycopg://internmatch:${POSTGRES_PASSWORD}@postgres:5432/internmatch
+      DATA_ENCRYPTION_KEY: ${DATA_ENCRYPTION_KEY:?set DATA_ENCRYPTION_KEY in .env}
+      AI_PROVIDER: ${AI_PROVIDER:-ollama}
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      OLLAMA_ALLOWED_HTTP_HOSTS: host.docker.internal
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3.5:9b}
+      OLLAMA_EMBEDDING_MODEL: ${OLLAMA_EMBEDDING_MODEL:-qwen3-embedding:0.6b}
+      GREENHOUSE_BOARDS: ${GREENHOUSE_BOARDS:-}
+      LEVER_SITES: ${LEVER_SITES:-}
+    extra_hosts: ["host.docker.internal:host-gateway"]
 volumes:
   pgdata:
-  redisdata:

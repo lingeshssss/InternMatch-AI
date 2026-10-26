@@ -1,0 +1,40 @@
+# Render Blueprint (prepared, not applied). One public URL: a single Docker web service running Caddy, Next.js,
+# FastAPI and the worker, plus a private managed PostgreSQL database. Creating it incurs charges; see docs/DEPLOYMENT.md.
+services:
+  - type: web
+    name: internmatch
+    runtime: docker
+    plan: 0.5c-512mb              # $7/month at time of writing; use 1c-2g if memory is tight
+    region: virginia
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeployTrigger: off        # deploy deliberately after reviewing changes
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_ORIGINS
+        sync: false               # e.g. https://internmatch.onrender.com (exact public origin, no trailing slash)
+      - key: DATA_ENCRYPTION_KEY
+        sync: false               # Fernet key; generate locally, store a backup outside Render
+      - key: DATABASE_URL
+        fromDatabase:
+          name: internmatch-db
+          property: connectionString
+      - key: TRUSTED_PROXIES
+        value: private_ranges     # Render's edge proxy reaches the container from private addresses
+      - key: RUN_MIGRATIONS
+        value: "true"
+      - key: AI_PROVIDER
+        value: disabled           # a hosted service cannot reach Ollama on your Mac; see docs/LOCAL_AI.md
+      - key: GREENHOUSE_BOARDS
+        sync: false
+      - key: LEVER_SITES
+        sync: false
+databases:
+  - name: internmatch-db
+    plan: 0.1c-256mb              # $6/month at time of writing, plus storage
+    region: virginia
+    postgresMajorVersion: "17"
+    databaseName: internmatch
+    user: internmatch
+    ipAllowList: []               # no public connections; only Render services in the same region

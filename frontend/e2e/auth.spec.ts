@@ -9,11 +9,13 @@ test('same-origin registration, session persistence, logout and login', async ({
   page.on('response', (r) => r.url().includes('/api/') && apiCalls.push(`${r.request().method()} ${new URL(r.url()).pathname} ${r.status()}`));
 
   const email = await register(page);
-  const session = (await context.cookies()).find((c) => c.name === 'internmatch_session');
+  // Development uses internmatch_session; production uses the __Host- prefix (Secure, host-only, Path=/).
+  const session = (await context.cookies()).find((c) => c.name.endsWith('internmatch_session'));
   expect(session, 'session cookie set on the app origin').toBeTruthy();
   expect(session!.httpOnly).toBe(true);
   expect(session!.sameSite).toBe('Lax');
   expect(session!.domain).toBe(new URL(baseURL!).hostname);
+  if (session!.name.startsWith('__Host-')) expect(session!.secure).toBe(true);
 
   // Refresh: the session survives a full reload.
   await page.reload();
