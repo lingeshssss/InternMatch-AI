@@ -64,6 +64,17 @@ Tradeoffs considered:
 - **Railway**: similar container model, usage-billed ($5 Hobby includes $5 usage; ~$10/GB-RAM-month). Comparable.
 - **Fly.io**: 1 GB machine ≈ $8.78/month but Managed Postgres starts at $38/month.
 
+### Free demo option (`render-free.yaml`)
+
+Render free web service (Docker) + a free external PostgreSQL such as Neon (free plan: no card, 1 GB storage,
+100 CU-hours/month per project, compute suspends after 5 minutes idle). Tradeoffs: the Render service sleeps after
+15 minutes without traffic, so the first request after a pause takes about a minute and the worker (scheduled
+discovery, queued extraction) only runs while it is awake. While awake, the worker keeps the database active, which
+uses Neon compute hours; continuous use for a whole month would exceed the free allowance. Fine for demos, not for
+reliable alerts. Steps: create a Neon project, copy its connection string, then New → Blueprint → branch
+`fix/same-origin-local-ai`, Blueprint Path `render-free.yaml`, and enter `DATABASE_URL`, `APP_ORIGINS`,
+`DATA_ENCRYPTION_KEY`.
+
 ### Deploy steps (after you approve the cost)
 
 1. Push this branch and merge it (or point Render at the branch).

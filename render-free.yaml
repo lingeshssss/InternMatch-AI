@@ -1,0 +1,32 @@
+# Free demo Blueprint: Render free web service + an external free PostgreSQL (e.g. Neon).
+# Limits: the service sleeps after 15 minutes without traffic (the worker sleeps with it; first request then
+# takes about a minute), 750 free instance hours per workspace per month, no Render database is created.
+# Use render.yaml for the always-on paid setup.
+services:
+  - type: web
+    name: internmatch
+    runtime: docker
+    plan: free
+    region: virginia
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeployTrigger: off
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_ORIGINS
+        sync: false               # e.g. https://internmatch.onrender.com (exact public origin, no trailing slash)
+      - key: DATA_ENCRYPTION_KEY
+        sync: false               # Fernet key; generate locally, store a backup outside Render
+      - key: DATABASE_URL
+        sync: false               # external PostgreSQL connection string (Neon: use the one with sslmode=require)
+      - key: TRUSTED_PROXIES
+        value: private_ranges
+      - key: RUN_MIGRATIONS
+        value: "true"
+      - key: AI_PROVIDER
+        value: disabled           # a hosted service cannot reach Ollama on your Mac; see docs/LOCAL_AI.md
+      - key: GREENHOUSE_BOARDS
+        sync: false
+      - key: LEVER_SITES
+        sync: false
