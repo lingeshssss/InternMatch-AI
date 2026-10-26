@@ -1,0 +1,60 @@
+# Single public origin: /api/* -> FastAPI (path unchanged), everything else -> Next.js.
+# TLS is terminated by the hosting platform in production, and is unnecessary on localhost.
+{
+	admin off
+	auto_https off
+	servers {
+		# Only these peers may supply X-Forwarded-For. Default: the local machine only.
+		# Behind a platform load balancer set TRUSTED_PROXIES (e.g. "private_ranges").
+		trusted_proxies static {$TRUSTED_PROXIES:127.0.0.1/32 ::1/128}
+		timeouts {
+			read_header 10s
+			read_body 60s
+			write 180s
+			idle 2m
+		}
+	}
+}
+
+{$SITE_ADDRESS::8080} {
+	# Loopback only by default so the local stack is not reachable from the network. Containers set CADDY_BIND=0.0.0.0.
+	bind {$CADDY_BIND:127.0.0.1 [::1]}
+	encode zstd gzip
+
+	handle /api/* {
+		# Resume uploads are capped at 5 MB by the API; allow multipart overhead here.
+		request_body {
+			max_size 6MB
+		}
+		reverse_proxy {$API_UPSTREAM:127.0.0.1:8000} {
+			# One trustworthy client address for rate limiting; spoofed client values are discarded.
+			header_up X-Forwarded-For {client_ip}
+			transport http {
+				dial_timeout 5s
+				response_header_timeout 170s
+			}
+		}
+	}
+
+	handle {
+		request_body {
+			max_size 1MB
+		}
+		reverse_proxy {$WEB_UPSTREAM:127.0.0.1:3000} {
+			header_up X-Forwarded-For {client_ip}
+		}
+	}
+
+	header -Server
+	log {
+		output stdout
+		# Request line and status only; headers (cookies, authorization) are removed. Bodies are never logged.
+		format filter {
+			wrap json
+			fields {
+				request>headers delete
+				resp_headers delete
+			}
+		}
+	}
+}

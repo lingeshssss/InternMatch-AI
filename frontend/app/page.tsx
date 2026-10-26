@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ArrowUpRight,
   Search,
@@ -26,19 +26,19 @@ import {
   CircleHelp,
   GraduationCap,
   Upload,
-  Building2,
 } from "lucide-react";
 import { Button, Modal } from "../components/ui";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+// Same-origin API: the reverse proxy routes /api/* to FastAPI, so cookies stay first-party.
+const API = "/api";
 async function api(path: string, options: RequestInit = {}) {
   const response = await fetch(API + path, {
-    credentials: "include",
+    credentials: "same-origin",
     ...options,
     headers: { ...(options.body instanceof FormData ? {} : { "Content-Type": "application/json" }), ...options.headers },
   });
   if (!response.ok) {
-    const data = await response.json().catch(() => ({ detail: "Server unavailable" }));
+    const data = await response.json().catch(() => ({ detail: `Server unavailable (HTTP ${response.status})` }));
     throw new Error(typeof data.detail === "string" ? data.detail : JSON.stringify(data.detail));
   }
   return response.json();
@@ -52,24 +52,38 @@ type Requirement = {
   explanation: string;
   source_url: string;
   verified_at: string;
+  origin?: "model" | "scanner" | "manual";
 };
 type Eligibility = { status: string; requirements: Requirement[]; disclosures: string[]; verified_at: string };
 type Fit = { score: number | null; explanation: string; components?: Record<string, number>; evidence?: Record<string, string> };
+type Details = {
+  opportunity_type?: string | null;
+  internship_start?: string | null;
+  internship_term?: string | null;
+  compensation?: string | null;
+  deadline?: string | null;
+  extraction_status?: "pending" | "ready" | "failed";
+  provenance?: { model?: string; quality?: { validator_version?: string; unreviewed_signals?: number } };
+};
 type Job = {
   id: string;
   company: string;
   title: string;
   location?: string;
   url: string;
-  details: Record<string, string | null>;
+  details: Details;
   retrieved_at: string;
   first_seen_at: string;
   eligibility: Eligibility;
   fit: Fit | null;
   saved: boolean;
   text?: string;
+  content_hash?: string;
   status?: string;
+  access_status?: string;
   extraction_error?: string;
+  changed_since_saved?: boolean;
+  evidence?: { id: string; quote: string; start: number; end: number; content_hash: string; source_url: string; retrieved_at: string }[];
 };
 type AppRecord = {
   id: string;
@@ -87,7 +101,28 @@ type AppRecord = {
 };
 type Notice = { id: string; data: Record<string, string>; read: boolean; created_at: string };
 type Profile = Record<string, unknown>;
-type Resume = { id: string; filename: string; confirmed: boolean; created_at: string; extraction: Profile };
+type Resume = {
+  id: string;
+  filename: string;
+  confirmed: boolean;
+  created_at: string;
+  extraction: Profile;
+  extraction_status: "pending" | "ready" | "failed";
+  extraction_error: string | null;
+  provenance: { model?: string; not_filled?: string[] } | null;
+};
+type SystemStatus = {
+  ai?: { provider: string; ready: boolean; llm_model?: string; embedding_model?: string; error?: string | null; fallback?: string | null; note?: string };
+  worker?: { running: boolean; last_heartbeat: string | null };
+  tasks?: { kind: string; status: string; count: number }[];
+  discovery_sources?: { greenhouse: string[]; lever: string[] };
+  email?: boolean;
+};
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const terms = (() => {
+  const year = new Date().getFullYear();
+  return [year, year + 1, year + 2, year + 3].flatMap((y) => ["Spring", "Summer", "Fall"].map((s) => `${s} ${y}`));
+})();
 const stages = ["Discovered", "Saved", "Applied", "Assessment", "Interview", "Offer", "Rejected"];
 const date = (v?: string | null) => (v ? new Date(v).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : "Not specified");
 const badgeClass = (s: string) =>
@@ -142,7 +177,10 @@ export default function Home() {
     [runs, setRuns] = useState<{ id: string; status: string; started_at: string; details: unknown }[]>([]);
   const [profile, setProfile] = useState<Profile>({}),
     [draftResume, setDraftResume] = useState<string | null>(null),
-    [health, setHealth] = useState<{ integrations?: Record<string, boolean> }>({}),
+    [system, setSystem] = useState<SystemStatus>({}),
+    [savedJobs, setSavedJobs] = useState<Job[]>([]),
+    [savedTotal, setSavedTotal] = useState(0),
+    [notFilled, setNotFilled] = useState<string[]>([]),
     [dark, setDark] = useState(false);
   const [prefs, setPrefs] = useState<{ in_app: boolean; email: boolean; digest: string; preferred_companies: string[] }>({
     in_app: true,
@@ -180,6 +218,10 @@ export default function Home() {
     setDark(saved);
     document.body.classList.toggle("dark", saved);
   }, []);
+  useEffect(() => {
+    // Whenever the session ends (sign out, deletion, expiry) the form returns to sign-in mode.
+    if (!user) setRegister(false);
+  }, [user]);
   const refresh = useCallback(async () => {
     const params = new URLSearchParams({
       mode: page === "Saved" ? "explore" : mode,
@@ -197,6 +239,12 @@ export default function Home() {
     setCounts(data.counts);
     setTotal(data.total);
     setTruncated(data.truncated);
+    setSavedTotal(data.saved_total ?? 0);
+    if (page === "Saved") {
+      const saved = await api("/saved");
+      setSavedJobs(saved.items);
+      setSavedTotal(saved.total);
+    }
   }, [page, mode, q, sort, company, location, skill, season, arrangement, offset]);
   useEffect(() => {
     if (!user) return;
@@ -217,7 +265,7 @@ export default function Home() {
       api("/resumes"),
       api("/notification-preferences"),
       api("/discovery"),
-      api("/health"),
+      api("/status"),
     ]);
     setProfile(values[0]);
     setApplications(values[1]);
@@ -225,7 +273,7 @@ export default function Home() {
     setResumes(values[3]);
     setPrefs(values[4]);
     setRuns(values[5]);
-    setHealth(values[6]);
+    setSystem(values[6]);
   }, []);
   useEffect(() => {
     if (user) loadPrivate().catch((e) => setError(e.message));
@@ -235,7 +283,7 @@ export default function Home() {
   }, [mode, q, sort, company, location, skill, season, arrangement, page]);
   const openJob = async (id: string) => {
     const detail = await api("/jobs/" + id);
-    setSelected({ ...detail, fit: jobs.find((j) => j.id === id)?.fit || null });
+    setSelected({ ...detail, fit: [...jobs, ...savedJobs].find((j) => j.id === id)?.fit || null });
   };
   const saveJob = async (job: Job) => {
     await api("/jobs/" + job.id + "/saved", { method: job.saved ? "DELETE" : "PUT" });
@@ -254,10 +302,51 @@ export default function Home() {
   const saveProfile = async () => {
     await api(draftResume ? "/resumes/" + draftResume + "/confirm" : "/profile", { method: draftResume ? "POST" : "PUT", body: JSON.stringify(profile) });
     setDraftResume(null);
+    setNotFilled([]);
     await loadPrivate();
     await refresh();
     announce("Confirmed qualifications saved. Eligibility will use these values.");
   };
+  const reviewResume = (r: Resume) => {
+    // Only values the resume actually supplied fill fields; existing confirmed values (standing, term, authorization) are kept.
+    const found = Object.fromEntries(Object.entries(r.extraction).filter(([k, v]) => k !== "weights" && v !== null && !(Array.isArray(v) && v.length === 0)));
+    if (r.extraction_status === "ready") setProfile((p) => ({ ...p, ...found }));
+    setNotFilled(r.provenance?.not_filled || []);
+    setDraftResume(r.id);
+  };
+  const uploadResume = async (f: File) => {
+    const form = new FormData();
+    form.append("file", f);
+    let result: Resume = await api("/resumes", { method: "POST", body: form });
+    if (result.extraction_status === "pending") announce("Resume stored. Extracting with your configured AI provider…");
+    // Local models can take a minute or more; poll the queued extraction instead of holding the request open.
+    for (let i = 0; result.extraction_status === "pending" && i < 120; i++) {
+      await sleep(3000);
+      result = await api("/resumes/" + result.id);
+    }
+    await api("/resumes").then(setResumes);
+    if (result.extraction_status === "ready") {
+      reviewResume(result);
+      announce("Extraction ready for your review. Nothing has been confirmed.");
+    } else {
+      setDraftResume(result.id);
+      setError(
+        (result.extraction_error || "Extraction is still pending; check back later.") +
+          " Your resume is stored. You can enter your qualifications manually below and confirm them.",
+      );
+    }
+  };
+  const monthField = (key: string, label: string) => (
+    <label className="field" key={key}>
+      {label}
+      <input
+        className="input"
+        type="month"
+        value={String(profile[key] ?? "").slice(0, 7)}
+        onChange={(e) => setField(key, e.target.value ? e.target.value + "-01" : null)}
+      />
+    </label>
+  );
   const field = (key: string, label: string, type = "text") => (
     <label className="field" key={key}>
       {label}
@@ -360,7 +449,7 @@ export default function Home() {
         </section>
       </div>
     );
-  const visible = page === "Saved" ? jobs.filter((j) => j.saved) : jobs;
+  const visible = page === "Saved" ? savedJobs : jobs;
   const nav = [
     { name: "Discover", icon: LayoutGrid },
     { name: "Saved", icon: Bookmark },
@@ -483,7 +572,7 @@ export default function Home() {
                 {[
                   { label: "Verified eligible", value: counts["Verified Eligible"] || 0, icon: ShieldCheck, foot: "Every stated mandatory rule satisfied" },
                   { label: "Potential matches", value: counts["Potentially Eligible"] || 0, icon: Sparkles, foot: "A few details still need clarification" },
-                  { label: "Saved in this page", value: jobs.filter((j) => j.saved).length, icon: Bookmark, foot: "Your personal opportunity shortlist" },
+                  { label: "Saved", value: savedTotal, icon: Bookmark, foot: "Your personal opportunity shortlist" },
                   { label: "Applications", value: applications.length, icon: BriefcaseBusiness, foot: "Keep your next steps moving" },
                 ].map((s) => (
                   <div className="stat" key={s.label}>
@@ -647,6 +736,7 @@ export default function Home() {
                       </div>
                       <div className="flex items-center justify-between mt-5 gap-2">
                         <Status value={job.eligibility.status} />
+                        {job.changed_since_saved && <span className="badge unknown">Changed since saved</span>}
                         <span className="text-xs muted">
                           {job.fit?.score != null ? (
                             <>
@@ -714,12 +804,15 @@ export default function Home() {
                 </p>
               </div>
               {draftResume && (
-                <div className="notice">
+                <div className="notice" data-testid="resume-review">
                   <FileText size={20} />
-                  <p>
-                    Reviewing a resume extraction. Check every field below and confirm it before it becomes part of your profile. This replaces your profile
-                    with the reviewed values.
-                  </p>
+                  <div>
+                    <p>
+                      Reviewing a resume. Check every field below and confirm it before it becomes part of your profile. Extracted values are drafts; standing,
+                      term and preferences are never filled automatically.
+                    </p>
+                    {notFilled.length > 0 && <p className="mt-2">Not filled because the value was not found verbatim in your resume: {notFilled.join(", ")}.</p>}
+                  </div>
                 </div>
               )}
               <div className="panel">
@@ -736,12 +829,30 @@ export default function Home() {
                     {field("degree", "Degree designation (exact, confirmed)")}
                     {field("major", "Major")}
                     {field("minor", "Minor")}
-                    {field("graduation", "Expected graduation (use the first of the month for month-only dates)", "date")}
+                    {monthField("graduation", "Expected graduation (month)")}
                     {field("gpa", "GPA (4.0 scale only)", "number")}
                     {field("standing", "Current standing")}
                     {field("standing_as_of", "Standing as of", "date")}
-                    {field("standing_at_start", "Confirmed standing at target start (e.g. rising sophomore)")}
-                    {field("target_start", "Target internship start", "date")}
+                    <label className="field">
+                      Confirmed standing at internship start
+                      <select className="input" value={String(profile.standing_at_start ?? "")} onChange={(e) => setField("standing_at_start", e.target.value || null)}>
+                        <option value="">Not provided</option>
+                        {["freshman", "rising sophomore", "sophomore", "rising junior", "junior", "rising senior", "senior"].map((x) => (
+                          <option key={x}>{x}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label className="field">
+                      Internship term that standing applies to
+                      <select className="input" value={String(profile.standing_term ?? "")} onChange={(e) => setField("standing_term", e.target.value || null)}>
+                        <option value="">Not provided</option>
+                        {terms.map((t) => (
+                          <option key={t}>{t}</option>
+                        ))}
+                      </select>
+                      <span className="help">Only compared with postings whose own evidence names the same term. Never carried to other terms.</span>
+                    </label>
+                    {field("target_start", "Preferred internship start (search preference only)", "date")}
                     {field("season", "Internship season")}
                     {listField("skills", "Technical skills")}
                     {listField("certifications", "Verified certifications")}
@@ -810,7 +921,12 @@ export default function Home() {
                 <div className="flex justify-between items-center gap-4">
                   <div>
                     <h2 className="section-title mb-1">Your resume library</h2>
-                    <p className="help">PDF or DOCX, up to 5 MB. Encrypted storage. AI extraction requires a configured provider.</p>
+                    <p className="help">
+                      PDF or DOCX, up to 5 MB. Encrypted storage.{" "}
+                      {system.ai?.ready
+                        ? `Extraction runs on ${system.ai.provider === "ollama" ? "your local model" : "the configured hosted provider"}.`
+                        : "AI extraction is unavailable; you can still upload and enter details manually."}
+                    </p>
                   </div>
                   <label className="button secondary cursor-pointer">
                     <Upload size={14} />
@@ -822,16 +938,7 @@ export default function Home() {
                       disabled={busy}
                       onChange={(e) => {
                         const f = e.target.files?.[0];
-                        if (f)
-                          action(async () => {
-                            const form = new FormData();
-                            form.append("file", f);
-                            const result = await api("/resumes", { method: "POST", body: form });
-                            setProfile(result.extraction);
-                            setDraftResume(result.id);
-                            await api("/resumes").then(setResumes);
-                            announce("Extraction ready for your review. Nothing has been confirmed.");
-                          });
+                        if (f) action(() => uploadResume(f));
                         e.target.value = "";
                       }}
                     />
@@ -842,15 +949,21 @@ export default function Home() {
                     <div>
                       <strong>{r.filename}</strong>
                       <p className="help">
-                        {date(r.created_at)} · {r.confirmed ? "Confirmed" : "Awaiting review"}
+                        {date(r.created_at)} ·{" "}
+                        {r.confirmed
+                          ? "Confirmed"
+                          : r.extraction_status === "pending"
+                            ? "Extracting…"
+                            : r.extraction_status === "failed"
+                              ? "Extraction unavailable — enter details manually"
+                              : "Awaiting review"}
                       </p>
                     </div>
                     <div className="flex gap-2">
                       <Button
                         className="secondary"
                         onClick={() => {
-                          setProfile(r.extraction);
-                          setDraftResume(r.id);
+                          reviewResume(r);
                           window.scrollTo({ top: 0, behavior: "smooth" });
                         }}
                       >
@@ -1060,18 +1173,39 @@ export default function Home() {
               <h1 className="page-heading">Settings & sources.</h1>
               <div className="panel mt-6">
                 <h2 className="section-title">Integration status</h2>
+                <div className="flex justify-between py-3 gap-3">
+                  <span>AI extraction & embeddings</span>
+                  <span className={"badge " + (system.ai?.ready ? "" : "unknown")} data-testid="ai-status">
+                    {system.ai?.ready ? `${system.ai.provider} ready` : system.ai ? `${system.ai.provider}: not ready` : "Unknown"}
+                  </span>
+                </div>
+                {system.ai && (
+                  <p className="help">
+                    {system.ai.llm_model && <>Extraction model: {system.ai.llm_model}. Embedding model: {system.ai.embedding_model}. </>}
+                    {system.ai.error}
+                    {system.ai.fallback ? ` Hosted fallback enabled: ${system.ai.fallback}.` : " No hosted fallback."}
+                  </p>
+                )}
                 {[
-                  ["AI extraction & embeddings", health.integrations?.ai],
-                  ["Public ATS discovery sources", health.integrations?.discovery_sources],
-                  ["Email delivery", health.integrations?.email],
-                ].map(([label, on]) => (
-                  <div className="flex justify-between py-3" key={String(label)}>
+                  ["Background worker", system.worker?.running, system.worker?.running ? "Running" : "Not running"],
+                  [
+                    "Public ATS discovery sources",
+                    !!(system.discovery_sources?.greenhouse.length || system.discovery_sources?.lever.length),
+                    [...(system.discovery_sources?.greenhouse || []).map((x) => "Greenhouse: " + x), ...(system.discovery_sources?.lever || []).map((x) => "Lever: " + x)].join(", ") ||
+                      "Not configured",
+                  ],
+                  ["Email delivery", system.email, system.email ? "Configured · live verification required" : "Not configured"],
+                ].map(([label, on, text]) => (
+                  <div className="flex justify-between py-3 gap-3" key={String(label)}>
                     <span>{String(label)}</span>
-                    <span className={"badge " + (on ? "" : "unknown")}>{on ? "Configured · live verification required" : "Not configured"}</span>
+                    <span className={"badge " + (on ? "" : "unknown")}>{String(text)}</span>
                   </div>
                 ))}
+                {!!system.tasks?.length && (
+                  <p className="help">Task queue: {system.tasks.map((t) => `${t.kind} ${t.status}: ${t.count}`).join(" · ")}</p>
+                )}
                 <p className="help">
-                  Configure credentials securely in environment settings. Public feeds use operator-reviewed GREENHOUSE_BOARDS and LEVER_SITES identifiers. No
+                  Configure credentials securely in server environment settings. Public feeds use operator-reviewed GREENHOUSE_BOARDS and LEVER_SITES identifiers. No
                   arbitrary URL crawling or access-control bypass is enabled.
                 </p>
               </div>
@@ -1184,13 +1318,13 @@ export default function Home() {
           )}
         </div>
       </main>
-      {toast && (
+      {toast && !selected && !comparing && !editApp && (
         <div className="toast" role="status">
           {toast}
         </div>
       )}
       {selected && (
-        <Modal title={selected.title} onClose={() => setSelected(null)}>
+        <Modal title={selected.title} onClose={() => setSelected(null)} toast={toast}>
           <div className="flex justify-between items-center mt-4 gap-3">
             <span className="muted">{selected.company}</span>
             <Status value={selected.eligibility.status} />
@@ -1202,6 +1336,9 @@ export default function Home() {
             </div>
           ))}
           {selected.extraction_error && <div className="notice mt-4">{selected.extraction_error}</div>}
+          {selected.details?.extraction_status === "pending" && (
+            <div className="notice mt-4">Requirement extraction is queued. Until it completes and passes source validation, this posting stays Unverified.</div>
+          )}
           <div className="mt-6">
             <h3 className="section-title">Requirement-by-requirement evidence</h3>
             {selected.eligibility.requirements.length === 0 && (
@@ -1216,6 +1353,7 @@ export default function Home() {
                   <Status value={r.result} />
                 </div>
                 <blockquote>“{r.quote}”</blockquote>
+                {r.origin === "scanner" && <p className="help">Detected by a deterministic source scan, not by the model. It stays unresolved until reviewed.</p>}
                 <p className="text-sm">
                   <strong>Your qualification:</strong> {r.student}
                 </p>
@@ -1261,7 +1399,11 @@ export default function Home() {
           <details className="mt-6">
             <summary className="cursor-pointer text-sm font-semibold">Original retrieved job description</summary>
             <pre className="source-text mt-4">{selected.text}</pre>
-            <p className="help">Source content SHA-256 is preserved in the API record.</p>
+            <p className="help">
+              Source content SHA-256 {selected.content_hash?.slice(0, 12)}… · retrieved {date(selected.retrieved_at)}
+              {selected.details.provenance?.model &&
+                ` · extracted by ${selected.details.provenance.model}, checked against source by validator v${selected.details.provenance.quality?.validator_version}`}
+            </p>
           </details>
           <div className="flex flex-wrap gap-3 mt-7">
             <a className="button" target="_blank" rel="noopener noreferrer" href={selected.url}>
@@ -1290,7 +1432,7 @@ export default function Home() {
         </Modal>
       )}
       {comparing && (
-        <Modal title="Compare your opportunities" onClose={() => setComparing(false)}>
+        <Modal title="Compare your opportunities" onClose={() => setComparing(false)} toast={toast}>
           <div className="table-wrap mt-6">
             <table>
               <thead>
@@ -1349,7 +1491,7 @@ export default function Home() {
         </Modal>
       )}
       {editApp && (
-        <Modal title="Update your application" onClose={() => setEditApp(null)}>
+        <Modal title="Update your application" onClose={() => setEditApp(null)} toast={toast}>
           <p className="muted mt-3 mb-6">
             {editApp.company} · {editApp.title}
           </p>

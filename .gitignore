@@ -12,3 +12,4 @@ storage/
 
 frontend/test-results/
 frontend/playwright-report/
+.local/
