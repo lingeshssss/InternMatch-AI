@@ -1,9 +1,9 @@
 from datetime import date, timedelta
 from sqlalchemy import select
-from .db import Profile, Requirement, Evaluation, Notification, MatchScore, NotificationPreference, now
+from .db import Profile, Requirement, Evaluation, Notification, MatchScore, NotificationPreference, now, aware
 from .security import decrypt, encrypt
 from .schemas import ProfileData, RequirementData
-from .eligibility import evaluate
+from .eligibility import evaluate, ENGINE_VERSION
 from .matching import fit
 
 def profile_for(db,user_id):
@@ -12,14 +12,16 @@ def profile_for(db,user_id):
 
 def evaluate_job(db,user_id,job):
     profile,p=profile_for(db,user_id); version=profile.version if profile else 0
-    stale=job.retrieved_at.replace(tzinfo=now().tzinfo) < now()-timedelta(days=2)
+    stale=aware(job.retrieved_at) < now()-timedelta(days=2)
     cached=db.scalar(select(Evaluation).where(Evaluation.user_id==user_id,Evaluation.job_id==job.id,Evaluation.profile_version==version,Evaluation.content_hash==job.content_hash))
-    if cached and job.status=='open' and not stale:
+    if cached and job.status=='open' and job.access_status=='ok' and not stale:
         cached_result=decrypt(cached.encrypted_result)
-        if cached_result.get('verified_at')==job.retrieved_at.isoformat(): return cached_result
+        if cached_result.get('verified_at')==job.retrieved_at.isoformat() and cached_result.get('engine_version')==ENGINE_VERSION: return cached_result
     requirements=[RequirementData.model_validate(x.data) for x in db.scalars(select(Requirement).where(Requirement.job_id==job.id))]
     start=date.fromisoformat(job.details['internship_start']) if job.details.get('internship_start') else None
-    result=evaluate(requirements,p,complete=job.extraction_complete,accessible=not stale,academic_scope_explicit=job.details.get('academic_scope_explicit',False),status=job.status,start=start,verified_at=job.retrieved_at.isoformat())
+    validated=bool((job.details.get('provenance') or {}).get('quality',{}).get('validator_version'))
+    accessible=not stale and job.access_status=='ok'
+    result=evaluate(requirements,p,complete=job.extraction_complete,accessible=accessible,academic_scope_explicit=job.details.get('academic_scope_explicit',False),status=job.status,start=start,term=job.details.get('internship_term'),validated=validated,source_complete=not job.details.get('source_incomplete',False),extracted=job.details.get('extraction_status')=='ready',verified_at=job.retrieved_at.isoformat())
     for item in result['requirements']:
         item['source_url']=job.url; item['verified_at']=job.retrieved_at.isoformat()
     if stale: result['disclosures'].append('Source has not been refreshed within 48 hours.')
@@ -31,7 +33,7 @@ def match_job(db,user_id,job):
     profile,p=profile_for(db,user_id); version=profile.version if profile else 0
     cached=db.scalar(select(MatchScore).where(MatchScore.user_id==user_id,MatchScore.job_id==job.id,MatchScore.profile_version==version,MatchScore.content_hash==job.content_hash))
     if cached: return decrypt(cached.encrypted_data)
-    result=fit(p,job.text)
+    result=fit(p,job.text,db)
     db.add(MatchScore(user_id=user_id,job_id=job.id,profile_version=version,content_hash=job.content_hash,encrypted_data=encrypt(result)))
     return result
 

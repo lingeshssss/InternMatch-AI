@@ -13,6 +13,8 @@ class ProfileData(BaseModel):
     standing_at_start: str | None = Field(None, max_length=80)
     standing_as_of: date | None = None
     target_start: date | None = None
+    # Term (e.g. "Summer 2027") for which standing_at_start is confirmed.
+    standing_term: str | None = Field(None, max_length=40)
     season: str | None = Field(None, max_length=100)
     gpa: float | None = Field(None, ge=0, le=4)
     skills: list[str] | None = None
@@ -48,6 +50,9 @@ class RequirementData(BaseModel):
     quote: str = Field(min_length=1)
     operator: Literal['between','one_of','all_of','minimum','equals','unspecified']
     values: list[str] = Field(default_factory=list)
+    # Set by deterministic validation, never trusted from model output.
+    origin: Literal['model','scanner','manual'] = 'model'
+    note: str | None = None
 
 class Extraction(BaseModel):
     requirements: list[RequirementData]
@@ -59,6 +64,7 @@ class Extraction(BaseModel):
     internship_end: date | None = None
     work_arrangement: str | None = None
     posting_date: date | None = None
+    internship_term: str | None = None
     opportunity_type: Literal['internship','research','fellowship','event','mentorship','other']
     metadata_evidence: dict[str, str]
 

@@ -2,6 +2,8 @@ import os
 from cryptography.fernet import Fernet
 os.environ['DATABASE_URL']='sqlite://'
 os.environ['DATA_ENCRYPTION_KEY']=Fernet.generate_key().decode()
+os.environ['APP_ORIGINS']='http://localhost:8080'
+os.environ['AI_PROVIDER']='disabled'
 import pytest
 from sqlalchemy import create_engine, event
 from sqlalchemy.pool import StaticPool
@@ -23,5 +25,5 @@ def client(db,monkeypatch):
     monkeypatch.setattr('app.main.rate_limit',lambda *a,**k:None)
     def override():yield db
     app.dependency_overrides[get_db]=override
-    with TestClient(app,headers={'Origin':'http://localhost:3000'}) as c:yield c
+    with TestClient(app,headers={'Origin':'http://localhost:8080'}) as c:yield c
     app.dependency_overrides.clear()

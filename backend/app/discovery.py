@@ -5,8 +5,9 @@ from urllib.parse import urlsplit
 import httpx
 from sqlalchemy import select, delete
 from .db import Company, Job, Requirement, Evidence, DiscoveryRun, JobSource, now
-from .ai import extract_job
+from .ai import extract_job, AIUnavailable
 from .config import settings
+from .tasks import enqueue
 
 class TextParser(HTMLParser):
     def __init__(self): super().__init__(); self.parts=[]; self.skip=0
@@ -70,25 +71,43 @@ def persist(db,record,kind,key):
     source=db.scalar(select(JobSource).where(JobSource.job_id==job.id,JobSource.source==kind,JobSource.source_key==key))
     if not source: db.add(JobSource(job_id=job.id,source=kind,source_key=key))
     else: source.last_seen_at=now()
-    if changed or not job.extraction_complete:
+    job.access_status='ok'
+    if changed:
         job.title=record['title']; job.location=record['location']; job.text=record['text']; job.content_hash=content_hash
-        db.execute(delete(Requirement).where(Requirement.job_id==job.id))
-        db.execute(delete(Evidence).where(Evidence.job_id==job.id))
-        job.extraction_complete=False; job.details={}
-        try:
-            extracted=extract_job(job.text)
-            job.details=extracted.model_dump(mode='json',exclude={'requirements'})
-            for req in extracted.requirements:
-                start=job.text.index(req.quote)
-                evidence=Evidence(job_id=job.id,quote=req.quote,start=start,end=start+len(req.quote),content_hash=content_hash,source_url=url)
-                db.add(evidence); db.flush()
-                db.add(Requirement(job_id=job.id,evidence_id=evidence.id,data=req.model_dump()))
-            job.extraction_complete=extracted.complete
-            job.extraction_error=None
-        except Exception as exc:
-            # Do not store provider error bodies, which may contain document or credential data.
-            job.extraction_error=type(exc).__name__+': requirement extraction unavailable; posting remains unverified'
+        clear_extraction(db,job)
+    if not job.extraction_complete and job.details.get('extraction_status')!='failed':
+        job.details={**job.details,'extraction_status':'pending'}
+        enqueue(db,'extract_job',{'job_id':job.id,'content_hash':job.content_hash},dedupe_key='extract:'+job.id)
     return job
+
+def clear_extraction(db,job):
+    db.execute(delete(Requirement).where(Requirement.job_id==job.id))
+    db.execute(delete(Evidence).where(Evidence.job_id==job.id))
+    job.extraction_complete=False; job.extraction_error=None; job.details={}
+
+def extract_posting(db,job_id,content_hash):
+    """Worker task. AIUnavailable propagates so the queue retries; invalid output is recorded, not retried."""
+    job=db.get(Job,job_id)
+    if not job or job.content_hash!=content_hash: return 'stale'
+    try:
+        extracted,provenance=extract_job(job.text,job.title)
+    except AIUnavailable:
+        raise
+    except Exception as exc:
+        clear_extraction(db,job)
+        # Do not store provider error bodies, which may contain document or credential data.
+        job.extraction_error=type(exc).__name__+': requirement extraction failed validation; posting remains unverified'
+        job.details={'extraction_status':'failed'}
+        return 'invalid'
+    clear_extraction(db,job)
+    job.details={**extracted.model_dump(mode='json',exclude={'requirements'}),'provenance':{**provenance,'extracted_at':now().isoformat()},'extraction_status':'ready','source_incomplete':provenance.get('quality',{}).get('source_incomplete',False)}
+    for req in extracted.requirements:
+        start=job.text.index(req.quote)
+        evidence=Evidence(job_id=job.id,quote=req.quote,start=start,end=start+len(req.quote),content_hash=content_hash,source_url=job.url)
+        db.add(evidence); db.flush()
+        db.add(Requirement(job_id=job.id,evidence_id=evidence.id,data=req.model_dump()))
+    job.extraction_complete=extracted.complete
+    return 'ok'
 
 def discover(db):
     run=DiscoveryRun(details={}); db.add(run); db.commit()
@@ -108,7 +127,10 @@ def discover(db):
                     if job.id not in seen: job.status='closed'; job.retrieved_at=now()
                 db.commit(); outcomes.append({'source':kind,'key':key,'status':'ok','postings':count})
             except Exception as exc:
-                db.rollback(); outcomes.append({'source':kind,'key':key,'status':'failed','error_type':type(exc).__name__})
+                db.rollback()
+                # A failed feed preserves postings but marks them inaccessible: they cannot be verified until a successful refresh.
+                for job in db.scalars(select(Job).where(Job.source==kind,Job.source_key==key,Job.status=='open')): job.access_status='inaccessible'
+                db.commit(); outcomes.append({'source':kind,'key':key,'status':'failed','error_type':type(exc).__name__})
             time.sleep(1)
     run=db.get(DiscoveryRun,run.id); run.finished_at=now(); run.status='failed' if any(x['status']=='failed' for x in outcomes) else 'complete'
     run.details={'sources':outcomes,'configured':bool(outcomes)}; db.commit()

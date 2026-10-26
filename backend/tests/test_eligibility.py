@@ -32,8 +32,18 @@ def test_missing_academic_restriction_not_invented():
     result=evaluate([req('skills',['Python'])],ProfileData(skills=['Python']),academic_scope_explicit=False)
     assert result['status']=='Potentially Eligible' and len(result['requirements'])==1 and result['disclosures']
 
-@pytest.mark.parametrize('flag',[{'accessible':False},{'complete':False},{'status':'closed'}])
+@pytest.mark.parametrize('flag',[{'accessible':False},{'source_complete':False},{'status':'closed'}])
 def test_unreliable_or_closed_source(flag):assert evaluate([req('skills',['Python'])],ProfileData(skills=['Python']),**flag)['status']=='Unverified'
+
+def test_extractor_doubt_is_unresolved_not_unverified():
+    p=ProfileData(gpa=3.5)
+    assert evaluate([req('gpa',['3.0'],'minimum')],p,complete=False)['status']=='Potentially Eligible'
+    # A confirmed mandatory failure is still a confirmed failure.
+    assert evaluate([req('gpa',['3.8'],'minimum')],p,complete=False)['status']=='Ineligible'
+
+@pytest.mark.parametrize('degree,options,expected',[("Bachelor's degree",["bachelor's degree"],'PASS'),('B.S. in Computer Science',["master's degree"],'UNKNOWN'),('Bachelor of Science',["Master's or PhD"],'UNKNOWN'),('Bachelor of Science',["master's",'phd'],'FAIL')])
+def test_degree_wording_normalized_by_level(degree,options,expected):
+    assert evaluate_requirement(req('degree',options),ProfileData(degree=degree))['result']==expected
 
 def test_no_requirements_not_vacuously_verified():assert evaluate([],ProfileData())['status']=='Unverified'
 
