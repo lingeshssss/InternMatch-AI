@@ -17,10 +17,11 @@ def check_config():
     if os.environ.get('APP_ENV') != 'production': log('APP_ENV must be production in the container'); sys.exit(2)
     local_ok = os.environ.get('ALLOW_INSECURE_LOCAL_ORIGIN') == 'true'
     for origin in os.environ['APP_ORIGINS'].split(','):
-        u = urlsplit(origin.strip())
+        u = urlsplit(origin.strip().strip('"\'').strip())
         # Plain HTTP is accepted only for a container tested on this machine (docker compose), never a public host.
         if u.scheme != 'https' and not (local_ok and u.scheme == 'http' and u.hostname in ('localhost', '127.0.0.1')):
-            log('APP_ORIGINS must list https:// origins only'); sys.exit(2)
+            # Origins are public URLs, so showing the rejected value is safe and saves guesswork.
+            log(f'APP_ORIGINS must list https:// origins only; got {origin!r}. Example: https://your-app.onrender.com'); sys.exit(2)
     try:
         from cryptography.fernet import Fernet
         Fernet(os.environ['DATA_ENCRYPTION_KEY'].encode())

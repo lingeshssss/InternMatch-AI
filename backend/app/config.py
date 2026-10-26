@@ -57,7 +57,8 @@ class Settings(BaseSettings):
     def origins(self) -> list[str]:
         raw = self.app_origins or self.frontend_origin
         if not raw: raw = 'http://localhost:8080,http://127.0.0.1:8080' if self.app_env != 'production' else ''
-        return [x.strip().rstrip('/') for x in raw.split(',') if x.strip()]
+        # Tolerate quotes and whitespace pasted into hosting dashboards.
+        return [x.strip().strip('"\'').strip().rstrip('/') for x in raw.split(',') if x.strip().strip('"\'').strip()]
 
     @property
     def production(self) -> bool: return self.app_env == 'production'
