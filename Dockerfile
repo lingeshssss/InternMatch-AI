@@ -10,6 +10,10 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build && cp -r .next/static .next/standalone/.next/static && (test ! -d public || cp -r public .next/standalone/public)
 
 FROM caddy:2.11.7-alpine AS caddy
+# The upstream binary carries a cap_net_bind_service file capability. Hosts that run containers with
+# no-new-privileges (e.g. Render) refuse to exec it as a non-root user. Port 8080 needs no capability,
+# so copy it without extended attributes.
+RUN cp /usr/bin/caddy /caddy
 
 FROM python:3.12.15-slim-bookworm
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 APP_ENV=production PORT=8080
@@ -17,7 +21,7 @@ WORKDIR /app
 COPY backend/requirements.lock backend/requirements.lock
 RUN pip install --no-cache-dir -r backend/requirements.lock && useradd --uid 10001 --create-home internmatch
 COPY --from=web /usr/local/bin/node /usr/local/bin/node
-COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
+COPY --from=caddy /caddy /usr/bin/caddy
 COPY --from=web --chown=internmatch /web/.next/standalone /app/web
 COPY backend/app backend/app
 COPY backend/migrations backend/migrations
