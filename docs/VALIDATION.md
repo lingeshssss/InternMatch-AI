@@ -1,27 +1,72 @@
 # Validation evidence
 
-These results apply to this cloud instance and the checked-out files. They do not establish production deployment, a newly published environment, real-provider accuracy, or live opportunity availability.
+Recorded 2026-10-25 on the owner's MacBook Air (Apple M5, 16 GB, macOS 27.2) for branch `fix/same-origin-local-ai`.
+These results do not establish a public deployment, real-world extraction accuracy, or SMTP delivery.
 
-## Passed
+## Deployment diagnosis (the reported "NetworkError")
 
-- `./scripts/install.sh`: repeated successfully using pinned Python requirements and `npm ci`, existing ignored encryption configuration, healthy PostgreSQL 16 and Redis 7 containers, and Alembic migrations. Home-directory cache writes were replaced with `/workspace/.cache` locations.
-- Backend: **52 passed**, zero skipped, with one upstream Starlette TestClient deprecation warning. Tests exercise graduation boundaries, first-year/rising-sophomore rules, junior-only failure, GPA including zero/unknown, unknown authorization, degree aliases, mandatory vs preferred qualifications, missing academic scope, inaccessible/incomplete/closed sources, contradictory requirements, authentication/Origin checks, encrypted profiles, tenant isolation, confirmation before using resume facts, unsafe uploads, source quote/metadata validation, duplicate ingestion, successful-feed closure vs failed-feed preservation, notification deduplication, stale-source suppression and refreshed decision caching.
-- PostgreSQL migration `0001`: upgraded on the development database. A separate disposable PostgreSQL database successfully upgraded to head, downgraded to base, then upgraded again; that disposable database was removed afterward.
-- `npm run build`: production compilation and TypeScript checks passed with Next.js **16.4.3**.
-- `npm run test:e2e`: **1 passed** Chromium workflow against the running Next.js production server and actual PostgreSQL/Redis-backed API. It registers an account, checks Strict Match by default, saves and reloads a profile, preserves unknown authorization, visits application tracking, queries the empty stored catalogue, checks a 390px mobile layout for horizontal overflow, changes theme, and deletes the test account. Browser runtime errors: none. No test accounts or fabricated jobs remain in the development database.
-- API `GET /health`: HTTP 200; database, Redis, and encryption prerequisites available. AI, employer sources, and email configuration flags are all **false**.
-- Production frontend HTTP 200. Default development launcher also started successfully and served the frontend and API with HTTP 200.
-- Launcher shutdown/restart check: terminating the launcher stopped API, worker and frontend, leaving ports 3000 and 8000 free before restart. The default development launcher is running at completion; processes must restart in future tasks.
-- `npm audit` including development dependencies: **0 known vulnerabilities** after upgrading Next.js and overriding the transitive PostCSS selector parser to a patched compatible release. The final build and browser test ran after the changes.
-- `pip-audit -r backend/requirements.lock`: **No known vulnerabilities found** after replacing vulnerable versions and re-freezing the installed dependencies. All Python package versions are pinned in the lock file.
-- `.env`, virtual environment, node_modules, build outputs and browser test results are ignored by Git. New application files remain uncommitted for review; the source repository had an unborn branch and no existing files.
+- `https://frontend-delta-puce-51.vercel.app`: deployed bundle contains `http://localhost:8000`; response CSP
+  `connect-src 'self' http://localhost:8000`; Vercel project `frontend` has no environment variables.
+- `https://backend-mu-beryl-48.vercel.app`: `GET /health` and the CORS preflight for `POST /auth/login` both return
+  `503 {"detail":"Rate limiter unavailable"}`; project `backend` has no environment variables; no runtime log entries.
+- Neither Vercel project was changed.
 
-## Blocked or unrun
+## Automated tests
 
-- Direct read-only requests to `boards-api.greenhouse.io` and `api.lever.co` returned **HTTP CONNECT 403** from the current environment network policy. No feeds were claimed to work and no real postings were inserted.
-- AI extraction, embeddings and real-resume extraction were not run: `AI_API_KEY` is absent. Controlled extraction tests validate schemas/evidence handling, not provider semantics or completeness.
-- SMTP delivery, search-engine integrations, hosted deployment, production end-to-end tests, load tests, security audit and real-provider evidence-quality benchmarks were not run. See LIMITATIONS.md for feature gaps requiring implementation in addition to credentials.
+| Suite | Result |
+| --- | --- |
+| Backend `pytest` (SQLite, no services) | **142 passed**. Includes acceptance cases A–F, quality gate (grounding, exceptions incl. outside the quoted fragment, coverage scanner, prompt injection, contradictions, term detection, EEO boilerplate, PhD standing), provider abstraction (URL policy, no key for Ollama, mandatory key/HTTPS for hosted, malformed-output retry, missing model, unreachable runtime, opt-in fallback, digest-versioned embedding cache), queue (lease, renewal, retry, dead letter, crash reclaim), outbox (sent once, interrupted → uncertain, connection failure retryable), Origin/CSRF, cookies (`__Host-`/Secure in production), session revocation, saved-version alerts, unbounded saved view, resume upload with AI unavailable, timezone conversion regression, managed DB URL normalization. |
+| Baseline before changes | 46 passed, 6 failed on this Mac (the suite required a live Redis server). |
+| Browser (Playwright/Chromium, `scripts/e2e.sh`, production builds behind Caddy, disposable databases) | **4 passed** in one run on the final code (25 s): same-origin auth (register, cookie attributes, reload persistence, `/api/auth/me`, logout revocation, wrong password, login, forged-Origin 403, no foreign-origin requests); workflow (profile, Potentially→Verified transition, evidence quotes/PASS/FAIL/source links, Ineligible and Unverified in Explore, search, saved view, application tracking, 390 px layout, theme); local-AI resume extraction with review-before-confirm; AI-unavailable status, clear error, no fabricated draft, manual entry. |
+| Frontend `tsc --noEmit`, `next build` (Next.js 16.4.3, standalone) | pass |
+| `npm audit` | 0 vulnerabilities |
+| `pip-audit -r backend/requirements.lock` | No known vulnerabilities found (Redis client removed from the lock) |
+| PostgreSQL 17 migration `0002` | upgrade → downgrade → upgrade with pre-existing rows; defaults applied |
 
-## Saved environment draft
+Bugs found and fixed during validation (each has a regression test): non-UTC timestamp relabelling (4 h error),
+Caddy listening on all interfaces, toasts hidden from assistive technology while a dialog was open, auth form stuck in
+registration mode after sign-out, resume drafts overwriting confirmed profile fields, exception clauses outside the
+quoted fragment, standing comparisons across conventions, EEO statements flagged as citizenship conditions, internship
+term in ATS titles missed, "senior PhD student" read as undergraduate standing, successful empty extractions labelled Unverified.
 
-Saved `install_script`, `start_skill`, additional allowed domains `boards-api.greenhouse.io`, `api.lever.co`, `api.openai.com`, an `AI_API_KEY` secret requirement scoped to `api.openai.com`, and `GREENHOUSE_BOARDS` / `LEVER_SITES` variable requirements. Saving was confirmed. It did not apply network changes to the running instance, supply credential values, or publish the environment. Review and save these settings, enter values securely, and publish the cloud environment to retain the prepared setup. This publication is separate from deploying the application to Vercel and backend hosting.
+## Same-origin stack (manual HTTP checks through Caddy on :8080)
+
+`/api/health` 200 with worker heartbeat; page CSP `connect-src 'self'`; register sets
+`internmatch_session; HttpOnly; Path=/; SameSite=lax` (no Domain); `/api/auth/me` with the cookie 200; cross-origin
+`POST` 403; 7 MB upload 413; listeners: Caddy `127.0.0.1/[::1]:8080`, API `127.0.0.1:8000`, Next `127.0.0.1:3000`,
+PostgreSQL `127.0.0.1:55432`, Ollama `127.0.0.1:11434`. Launcher stop: all ports freed, no orphan processes, restart OK.
+
+## Production container (local Docker via Colima 0.10.3 / Docker 29.5)
+
+`docker build .` succeeds (image 699 MB: Next.js standalone, FastAPI, worker, Caddy; non-root user `internmatch`).
+`docker compose up` with a separate PostgreSQL 17 container and `APP_ENV=production`: migrations applied at start,
+`/api/health` 200 with worker heartbeat, Docker `HEALTHCHECK` healthy, production CSP, cookie
+`__Host-internmatch_session; HttpOnly; Secure; SameSite=lax; Path=/`, API docs disabled (404). Memory for all four
+processes: 214 MiB. Playwright auth spec and local-AI resume spec **passed against the container**; the container's
+worker reached Ollama on the Mac through `host.docker.internal` while Ollama stayed bound to `127.0.0.1`.
+`docker compose restart`: graceful SIGTERM shutdown (worker stopped cleanly), idempotent migrations, healthy again in
+~2 s. Entrypoint refuses `http://` public origins, invalid Fernet keys and non-production `APP_ENV`. Test containers
+and volume were removed afterwards.
+
+## Local AI
+
+Installed Ollama 0.40.11 (official notarized DMG). Benchmarks in `backend/evaluation/results/` (summary in LOCAL_AI.md):
+`qwen3.5:9b`, 96 extractions over 32 controlled cases: 0 false Verified, 0 false Ineligible, 0 schema rejections,
+accuracy 0.95 / 0.89 (tuning / held-out), median 8.9–9.9 s. `qwen3-embedding:0.6b`: top-1 6/6 on the matching check.
+
+## Live integrations (real network, this Mac)
+
+- Public feeds: Greenhouse `stripe, airbnb, figma, discord, databricks, robinhood` and Lever `palantir, spotify` returned
+  HTTP 200 (Lever `plaid` 404). The earlier cloud CONNECT 403 was an egress restriction, not a credential issue.
+- End-to-end discovery in a disposable database (`GREENHOUSE_BOARDS=robinhood,figma`): 10 internship postings fetched and
+  persisted in 3.1 s; 10 durable `extract_job` tasks completed with `qwen3.5:9b` in 165 s; all `done`, none dead.
+  Decisions for a sample B.S. student (May 2028, rising junior for Summer 2027, authorized, Python/SQL): two PhD
+  internships Ineligible (degree FAIL), eight Potentially Eligible (no stated hard requirements, or unresolved
+  conditions such as "full-time MBA program"), none Verified. The database was dropped afterwards; the development
+  catalogue contains no postings until you configure boards.
+
+## Not run / blocked
+
+- Public deployment and deployed end-to-end tests: awaiting your approval of hosting costs.
+- SMTP delivery: no credentials. Hosted AI fallback: not enabled, no key.
+- Load testing, security review, real-posting labelled accuracy evaluation.

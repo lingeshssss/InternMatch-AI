@@ -1,24 +1,52 @@
 # InternMatch AI
 
-Evidence-backed internship discovery and eligibility verification, with a Next.js interface and FastAPI/PostgreSQL/Redis backend.
+Evidence-backed internship discovery and eligibility verification: Next.js + FastAPI + PostgreSQL behind one URL,
+with optional local AI (Ollama) for requirement extraction, resume drafts and semantic matching.
 
-An empty source repository has been implemented as a working development foundation. This is **not yet a completed production platform**. Live AI, employer feeds, email and hosted deployment require configuration and additional validation. See [delivery limitations](docs/LIMITATIONS.md) for the remaining acceptance criteria.
+**Status:** works end to end on a Mac (verified in a real browser). Not production-ready. There is no public deployment
+yet, and account recovery, email verification and upload isolation are still missing. See [limitations](docs/LIMITATIONS.md).
 
-## Start
-
-Python 3.12, uv, Node 24, and Docker Compose are required.
+## Start (macOS)
 
 ```sh
-./scripts/install.sh
-.venv/bin/python scripts/run.py
+brew install uv postgresql@17 caddy      # plus Node 24; optional: Ollama (docs/LOCAL_AI.md)
+./scripts/install.sh                     # once; never overwrites existing .env keys
+.venv/bin/python scripts/run.py          # PostgreSQL, migrations, API, worker, Next.js, Caddy
+open http://localhost:8080
 ```
 
-Set optional provider/source configuration in the ignored `.env` using `.env.example` as a reference. The install script generates a local encryption key only if `.env` does not already exist. If it exists without a key, add a securely generated key before startup. No API credentials are included or fabricated.
-
-Default discovery mode is Strict Match. No employer feeds are configured by default and no fake postings are seeded. Configure public employer board identifiers and an AI provider to ingest and extract actual postings. Missing credentials or inaccessible sources produce explicit failures/Unverified results.
+Everything is served from `http://localhost:8080`. The browser calls same-origin `/api/*`, which Caddy forwards to FastAPI.
+Local AI: `ollama pull qwen3.5:9b && ollama pull qwen3-embedding:0.6b` (`AI_PROVIDER=ollama` is the installed default).
+Employer feeds: set `GREENHOUSE_BOARDS` / `LEVER_SITES` in `.env` to public board identifiers, restart, then click
+"Refresh opportunities". No sample jobs are seeded and no student profile is preloaded.
 
 ## Eligibility contract
 
-Each requirement is PASS, FAIL, or UNKNOWN. Mandatory failures disqualify independently of fit. Missing facts remain unknown. Source evidence is preserved with retrieval time, exact character span and content hash. Incomplete, inaccessible, closed or stale descriptions are Unverified. Missing stated academic scope remains Potentially Eligible. Profiles and resume drafts do not infer a degree, work authorization or other sensitive attributes.
+Every mandatory requirement is PASS, FAIL or UNKNOWN; UNKNOWN never becomes PASS.
 
-See [deployment instructions](docs/DEPLOYMENT.md), [limitations](docs/LIMITATIONS.md), and [validation results](docs/VALIDATION.md).
+- **Verified Eligible**: every stated mandatory requirement passes, with source-validated evidence, from a fresh, open, complete posting.
+- **Potentially Eligible**: no confirmed failure, but something is unresolved (unknown facts, unclear wording, an unreviewed condition, no stated academic scope).
+- **Ineligible**: at least one confirmed mandatory failure. Technical fit never overrides it.
+- **Unverified**: the source is inaccessible, stale (>48 h), closed, truncated, or has no validated requirements.
+
+Academic standing is compared only for the internship term the employer's own text states. It is never taken from
+the student's preferred date or inferred from graduation year. Degree, GPA, citizenship, work authorization,
+certifications and credits are never inferred. Exact employer quotes, character spans, content hashes, URLs and
+retrieval times are preserved. Model output is untrusted. Deterministic validation against the source decides what
+counts as evidence (docs/LOCAL_AI.md).
+
+## Documentation
+
+- [Deployment](docs/DEPLOYMENT.md): architecture, the Vercel failure diagnosis, local and container deployment, env checklist, backups, worker monitoring
+- [Local AI](docs/LOCAL_AI.md): model choice, benchmark results, install/verify, network constraints
+- [Credentials](docs/CREDENTIALS.md): what needs a secret, how to obtain it, where it goes
+- [Validation](docs/VALIDATION.md): what was tested and what passed
+- [Limitations](docs/LIMITATIONS.md): what is incomplete
+
+## Tests
+
+```sh
+cd backend && ../.venv/bin/python -m pytest -q          # unit/integration (SQLite, no services needed)
+./scripts/e2e.sh                                         # Playwright against disposable same-origin stacks
+cd backend && ../.venv/bin/python -m evaluation.benchmark --model qwen3.5:9b   # local model evaluation
+```
