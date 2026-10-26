@@ -22,6 +22,11 @@ def check_config():
         if u.scheme != 'https' and not (local_ok and u.scheme == 'http' and u.hostname in ('localhost', '127.0.0.1')):
             # Origins are public URLs, so showing the rejected value is safe and saves guesswork.
             log(f'APP_ORIGINS must list https:// origins only; got {origin!r}. Example: https://your-app.onrender.com'); sys.exit(2)
+    db = urlsplit(os.environ['DATABASE_URL'])
+    if db.hostname in ('localhost', '127.0.0.1', '::1'):
+        # Inside a container, localhost is the container itself; a laptop's local .env value cannot work here.
+        log(f'DATABASE_URL points at {db.hostname}:{db.port}, which inside this container is the container itself. '
+            'Use the managed database URL (e.g. Neon: postgresql://...neon.tech/...?sslmode=require).'); sys.exit(2)
     try:
         from cryptography.fernet import Fernet
         Fernet(os.environ['DATA_ENCRYPTION_KEY'].encode())
