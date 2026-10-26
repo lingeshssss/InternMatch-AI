@@ -1,0 +1,19 @@
+{
+  "generated_at": "2026-10-26T03:03:05.635837+00:00",
+  "hardware": {
+    "machine": "arm64",
+    "macos": "27.2",
+    "chip": "Apple M5",
+    "memory_gb": 16,
+    "ollama": "ollama version is 0.40.11"
+  },
+  "cases": 20,
+  "case_file": "cases.json",
+  "embeddings": {
+    "model": "ollama:qwen3-embedding:0.6b@ac6da0dfba84",
+    "top1_accuracy": 1.0,
+    "mean_margin": 0.253,
+    "dimensions": 1024,
+    "seconds_for_12_texts": 7.61
+  }
+}

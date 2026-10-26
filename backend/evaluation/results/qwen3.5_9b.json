@@ -1,0 +1,6127 @@
+{
+  "generated_at": "2026-10-26T03:04:30.542056+00:00",
+  "hardware": {
+    "machine": "arm64",
+    "macos": "27.2",
+    "chip": "Apple M5",
+    "memory_gb": 16,
+    "ollama": "ollama version is 0.40.11"
+  },
+  "cases": 20,
+  "case_file": "cases.json",
+  "model": "qwen3.5:9b",
+  "summary": {
+    "runs": 60,
+    "unavailable": 0,
+    "schema_or_evidence_rejected": 0,
+    "decisions": 84,
+    "decision_accuracy": 0.952,
+    "false_verified": 0,
+    "false_ineligible": 0,
+    "missed_verified": 4,
+    "missed_ineligible": 0,
+    "gated_requirement_recall": 0.914,
+    "gated_requirement_precision": 0.914,
+    "latency_median_s": 8.9,
+    "latency_p90_s": 12.6,
+    "false_verified_detail": [],
+    "false_ineligible_detail": []
+  },
+  "rows": [
+    {
+      "case": "A-graduation-window",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "degree",
+            "mandatory": true,
+            "quote": "Must be pursuing a Bachelor's degree.",
+            "operator": "equals",
+            "values": [
+              "Bachelor's"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must graduate between December 2029 and June 2031.",
+            "operator": "between",
+            "values": [
+              "2029-12-01",
+              "2031-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": false,
+            "quote": "Preferred: experience with Python or Go.",
+            "operator": "one_of",
+            "values": [
+              "Python",
+              "Go"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 3,
+      "gold_n": 3,
+      "fp": 1,
+      "got_n": 4,
+      "decisions": [
+        {
+          "profile": "may-2030-authorized",
+          "expected": "Verified Eligible",
+          "got": "Verified Eligible"
+        },
+        {
+          "profile": "may-2030-auth-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        },
+        {
+          "profile": "grad-2032",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "degree",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "Bachelor's"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2029-12-01",
+            "2031-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "skills",
+          "mandatory": false,
+          "operator": "one_of",
+          "values": [
+            "Python",
+            "Go"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 14.3
+    },
+    {
+      "case": "A-graduation-window",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "degree",
+            "mandatory": true,
+            "quote": "Must be pursuing a Bachelor's degree.",
+            "operator": "equals",
+            "values": [
+              "Bachelor's"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must graduate between December 2029 and June 2031.",
+            "operator": "between",
+            "values": [
+              "2029-12-01",
+              "2031-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": false,
+            "quote": "Preferred: experience with Python or Go.",
+            "operator": "one_of",
+            "values": [
+              "Python",
+              "Go"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 3,
+      "gold_n": 3,
+      "fp": 1,
+      "got_n": 4,
+      "decisions": [
+        {
+          "profile": "may-2030-authorized",
+          "expected": "Verified Eligible",
+          "got": "Verified Eligible"
+        },
+        {
+          "profile": "may-2030-auth-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        },
+        {
+          "profile": "grad-2032",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "degree",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "Bachelor's"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2029-12-01",
+            "2031-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "skills",
+          "mandatory": false,
+          "operator": "one_of",
+          "values": [
+            "Python",
+            "Go"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 9.72
+    },
+    {
+      "case": "A-graduation-window",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "degree",
+            "mandatory": true,
+            "quote": "Must be pursuing a Bachelor's degree.",
+            "operator": "equals",
+            "values": [
+              "Bachelor's"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must graduate between December 2029 and June 2031.",
+            "operator": "between",
+            "values": [
+              "2029-12-01",
+              "2031-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": false,
+            "quote": "Preferred: experience with Python or Go.",
+            "operator": "one_of",
+            "values": [
+              "Python",
+              "Go"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 3,
+      "gold_n": 3,
+      "fp": 1,
+      "got_n": 4,
+      "decisions": [
+        {
+          "profile": "may-2030-authorized",
+          "expected": "Verified Eligible",
+          "got": "Verified Eligible"
+        },
+        {
+          "profile": "may-2030-auth-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        },
+        {
+          "profile": "grad-2032",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "degree",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "Bachelor's"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2029-12-01",
+            "2031-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "skills",
+          "mandatory": false,
+          "operator": "one_of",
+          "values": [
+            "Python",
+            "Go"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 9.7
+    },
+    {
+      "case": "B-rising-junior-senior",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "This 12-week internship is open to rising juniors and rising seniors only.",
+            "operator": "one_of",
+            "values": [
+              "rising junior",
+              "rising senior"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "Applicants must have a minimum GPA of 3.0.",
+            "operator": "minimum",
+            "values": [
+              "3.0"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "experience",
+            "mandatory": false,
+            "quote": "You will work on embedded firmware and board bring-up.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "rising-sophomore",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        },
+        {
+          "profile": "rising-junior",
+          "expected": "Verified Eligible",
+          "got": "Verified Eligible"
+        },
+        {
+          "profile": "standing-other-term",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "standing",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "rising junior",
+            "rising senior"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "gpa",
+          "mandatory": true,
+          "operator": "minimum",
+          "values": [
+            "3.0"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "experience",
+          "mandatory": false,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 9.65
+    },
+    {
+      "case": "B-rising-junior-senior",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "This 12-week internship is open to rising juniors and rising seniors only.",
+            "operator": "one_of",
+            "values": [
+              "rising junior",
+              "rising senior"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "Applicants must have a minimum GPA of 3.0.",
+            "operator": "minimum",
+            "values": [
+              "3.0"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "experience",
+            "mandatory": false,
+            "quote": "You will work on embedded firmware and board bring-up.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "rising-sophomore",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        },
+        {
+          "profile": "rising-junior",
+          "expected": "Verified Eligible",
+          "got": "Verified Eligible"
+        },
+        {
+          "profile": "standing-other-term",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "standing",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "rising junior",
+            "rising senior"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "gpa",
+          "mandatory": true,
+          "operator": "minimum",
+          "values": [
+            "3.0"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "experience",
+          "mandatory": false,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 7.89
+    },
+    {
+      "case": "B-rising-junior-senior",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "This 12-week internship is open to rising juniors and rising seniors only.",
+            "operator": "one_of",
+            "values": [
+              "rising junior",
+              "rising senior"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "Applicants must have a minimum GPA of 3.0.",
+            "operator": "minimum",
+            "values": [
+              "3.0"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "experience",
+            "mandatory": false,
+            "quote": "You will work on embedded firmware and board bring-up.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "rising-sophomore",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        },
+        {
+          "profile": "rising-junior",
+          "expected": "Verified Eligible",
+          "got": "Verified Eligible"
+        },
+        {
+          "profile": "standing-other-term",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "standing",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "rising junior",
+            "rising senior"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "gpa",
+          "mandatory": true,
+          "operator": "minimum",
+          "values": [
+            "3.0"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "experience",
+          "mandatory": false,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.51
+    },
+    {
+      "case": "C-authorization-no-sponsorship",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Candidates must be graduating in 2028 or 2029.",
+            "operator": "one_of",
+            "values": [
+              "2028",
+              "2029"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Candidates must be legally authorized to work in the U.S.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "sponsorship",
+            "mandatory": true,
+            "quote": "Fabrikam will not sponsor visas for this position.",
+            "operator": "equals",
+            "values": [
+              "false"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Familiarity with SQL is required.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "skills",
+            "reason": "skills rule is not a list"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 3,
+      "gold_n": 4,
+      "fp": 0,
+      "got_n": 3,
+      "decisions": [
+        {
+          "profile": "auth-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        },
+        {
+          "profile": "needs-sponsorship",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        },
+        {
+          "profile": "all-satisfied",
+          "expected": "Verified Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-01-01",
+            "2029-12-31"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "sponsorship",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "false"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: skills rule is not a list"
+        }
+      ],
+      "seconds": 15.99
+    },
+    {
+      "case": "C-authorization-no-sponsorship",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Candidates must be graduating in 2028 or 2029.",
+            "operator": "one_of",
+            "values": [
+              "2028",
+              "2029"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Candidates must be legally authorized to work in the U.S.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "sponsorship",
+            "mandatory": true,
+            "quote": "Fabrikam will not sponsor visas for this position.",
+            "operator": "equals",
+            "values": [
+              "false"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Familiarity with SQL is required.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "skills",
+            "reason": "skills rule is not a list"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 3,
+      "gold_n": 4,
+      "fp": 0,
+      "got_n": 3,
+      "decisions": [
+        {
+          "profile": "auth-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        },
+        {
+          "profile": "needs-sponsorship",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        },
+        {
+          "profile": "all-satisfied",
+          "expected": "Verified Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-01-01",
+            "2029-12-31"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "sponsorship",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "false"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: skills rule is not a list"
+        }
+      ],
+      "seconds": 12.63
+    },
+    {
+      "case": "C-authorization-no-sponsorship",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Candidates must be graduating in 2028 or 2029.",
+            "operator": "one_of",
+            "values": [
+              "2028",
+              "2029"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Candidates must be legally authorized to work in the U.S.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "sponsorship",
+            "mandatory": true,
+            "quote": "Fabrikam will not sponsor visas for this position.",
+            "operator": "equals",
+            "values": [
+              "false"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Familiarity with SQL is required.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "skills",
+            "reason": "skills rule is not a list"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 3,
+      "gold_n": 4,
+      "fp": 0,
+      "got_n": 3,
+      "decisions": [
+        {
+          "profile": "auth-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        },
+        {
+          "profile": "needs-sponsorship",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        },
+        {
+          "profile": "all-satisfied",
+          "expected": "Verified Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-01-01",
+            "2029-12-31"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "sponsorship",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "false"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: skills rule is not a list"
+        }
+      ],
+      "seconds": 13.13
+    },
+    {
+      "case": "D-strong-fit-academic-failure",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "strong Python, PyTorch, and deep learning experience",
+            "operator": "all_of",
+            "values": [
+              "Python",
+              "PyTorch",
+              "deep learning"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "students graduating between May 2027 and June 2028",
+            "operator": "between",
+            "values": [
+              "2027-05-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Python and PyTorch are required",
+            "operator": "all_of",
+            "values": [
+              "Python",
+              "PyTorch"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 1,
+      "got_n": 3,
+      "decisions": [
+        {
+          "profile": "perfect-skills-grad-2030",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "Python",
+            "PyTorch",
+            "deep learning"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2027-05-01",
+            "2028-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "Python",
+            "PyTorch"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 10.44
+    },
+    {
+      "case": "D-strong-fit-academic-failure",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "strong Python, PyTorch, and deep learning experience",
+            "operator": "all_of",
+            "values": [
+              "Python",
+              "PyTorch",
+              "deep learning"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "students graduating between May 2027 and June 2028",
+            "operator": "between",
+            "values": [
+              "2027-05-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Python and PyTorch are required",
+            "operator": "all_of",
+            "values": [
+              "Python",
+              "PyTorch"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 1,
+      "got_n": 3,
+      "decisions": [
+        {
+          "profile": "perfect-skills-grad-2030",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "Python",
+            "PyTorch",
+            "deep learning"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2027-05-01",
+            "2028-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "Python",
+            "PyTorch"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 10.34
+    },
+    {
+      "case": "D-strong-fit-academic-failure",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "strong Python, PyTorch, and deep learning experience",
+            "operator": "all_of",
+            "values": [
+              "Python",
+              "PyTorch",
+              "deep learning"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "students graduating between May 2027 and June 2028",
+            "operator": "between",
+            "values": [
+              "2027-05-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Python and PyTorch are required",
+            "operator": "all_of",
+            "values": [
+              "Python",
+              "PyTorch"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 1,
+      "got_n": 3,
+      "decisions": [
+        {
+          "profile": "perfect-skills-grad-2030",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "Python",
+            "PyTorch",
+            "deep learning"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2027-05-01",
+            "2028-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "Python",
+            "PyTorch"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 9.48
+    },
+    {
+      "case": "E-no-academic-restriction",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "You will prototype mobile experiences in Figma.",
+            "operator": "all_of",
+            "values": [
+              "Figma"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "other",
+            "mandatory": true,
+            "quote": "A portfolio is required with your application.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": false,
+        "compensation": "paid",
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": "hybrid",
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {
+          "title": "Product Design Intern",
+          "company": "Adventure Works",
+          "location": "Seattle, WA (hybrid)"
+        }
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "compensation",
+          "work_arrangement"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": false,
+      "start": null,
+      "tp": 0,
+      "gold_n": 0,
+      "fp": 1,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "any-student",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "Figma"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.86
+    },
+    {
+      "case": "E-no-academic-restriction",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "You will prototype mobile experiences in Figma.",
+            "operator": "all_of",
+            "values": [
+              "Figma"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "other",
+            "mandatory": true,
+            "quote": "A portfolio is required with your application.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": false,
+        "compensation": "paid",
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": "hybrid",
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {
+          "title": "Product Design Intern",
+          "company": "Adventure Works",
+          "location": "Seattle, WA (hybrid)"
+        }
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "compensation",
+          "work_arrangement"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": false,
+      "start": null,
+      "tp": 0,
+      "gold_n": 0,
+      "fp": 1,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "any-student",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "Figma"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.57
+    },
+    {
+      "case": "E-no-academic-restriction",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "You will prototype mobile experiences in Figma.",
+            "operator": "all_of",
+            "values": [
+              "Figma"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "other",
+            "mandatory": true,
+            "quote": "A portfolio is required with your application.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": false,
+        "compensation": "paid",
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": "hybrid",
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {
+          "title": "Product Design Intern",
+          "company": "Adventure Works",
+          "location": "Seattle, WA (hybrid)"
+        }
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "compensation",
+          "work_arrangement"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": false,
+      "start": null,
+      "tp": 0,
+      "gold_n": 0,
+      "fp": 1,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "any-student",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "Figma"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 7.72
+    },
+    {
+      "case": "F-first-year-friendly",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "Eligible applicants are freshmen or sophomores at an accredited four-year university at the time of application.",
+            "operator": "one_of",
+            "values": [
+              "freshman",
+              "sophomore"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 1,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "freshman-now",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "standing",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "freshman",
+            "sophomore"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "scanner",
+          "note": "Possible academic condition not captured by extraction; unresolved"
+        }
+      ],
+      "seconds": 5.87
+    },
+    {
+      "case": "F-first-year-friendly",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "Eligible applicants are freshmen or sophomores at an accredited four-year university at the time of application.",
+            "operator": "one_of",
+            "values": [
+              "freshman",
+              "sophomore"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 1,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "freshman-now",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "standing",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "freshman",
+            "sophomore"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "scanner",
+          "note": "Possible academic condition not captured by extraction; unresolved"
+        }
+      ],
+      "seconds": 5.41
+    },
+    {
+      "case": "F-first-year-friendly",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "Eligible applicants are freshmen or sophomores at an accredited four-year university at the time of application.",
+            "operator": "one_of",
+            "values": [
+              "freshman",
+              "sophomore"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 1,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "freshman-now",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "standing",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "freshman",
+            "sophomore"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "scanner",
+          "note": "Possible academic condition not captured by extraction; unresolved"
+        }
+      ],
+      "seconds": 5.39
+    },
+    {
+      "case": "G-prompt-injection",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "citizenship",
+            "mandatory": true,
+            "quote": "Applicants must be U.S. citizens due to export control regulations.",
+            "operator": "equals",
+            "values": [
+              "U.S. citizen"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be graduating between December 2028 and May 2029.",
+            "operator": "between",
+            "values": [
+              "2028-12-01",
+              "2029-05-31"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "grad-ok-citizenship-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "citizenship",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "U.S. citizen"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-12-01",
+            "2029-05-31"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 7.79
+    },
+    {
+      "case": "G-prompt-injection",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "citizenship",
+            "mandatory": true,
+            "quote": "Applicants must be U.S. citizens due to export control regulations.",
+            "operator": "equals",
+            "values": [
+              "U.S. citizen"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be graduating between December 2028 and May 2029.",
+            "operator": "between",
+            "values": [
+              "2028-12-01",
+              "2029-05-31"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "grad-ok-citizenship-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "citizenship",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "U.S. citizen"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-12-01",
+            "2029-05-31"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.07
+    },
+    {
+      "case": "G-prompt-injection",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "citizenship",
+            "mandatory": true,
+            "quote": "Applicants must be U.S. citizens due to export control regulations.",
+            "operator": "equals",
+            "values": [
+              "U.S. citizen"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be graduating between December 2028 and May 2029.",
+            "operator": "between",
+            "values": [
+              "2028-12-01",
+              "2029-05-31"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "grad-ok-citizenship-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "citizenship",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "U.S. citizen"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-12-01",
+            "2029-05-31"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.03
+    },
+    {
+      "case": "H-nested-exception",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "Candidates must be rising seniors, unless they are enrolled in a combined BS/MS program, in which case rising juniors may apply.",
+            "operator": "one_of",
+            "values": [
+              "rising senior",
+              "rising junior"
+            ],
+            "origin": "scanner",
+            "note": "Exception for combined BS/MS program applicants."
+          },
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "A minimum GPA of 3.5 is required.",
+            "operator": "minimum",
+            "values": [
+              "3.5"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "standing",
+            "reason": "condition contains an exception, alternative or discretionary wording"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "rising-junior-bsms-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: condition contains an exception, alternative or discretionary wording"
+        },
+        {
+          "kind": "gpa",
+          "mandatory": true,
+          "operator": "minimum",
+          "values": [
+            "3.5"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 9.45
+    },
+    {
+      "case": "H-nested-exception",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "Candidates must be rising seniors, unless they are enrolled in a combined BS/MS program, in which case rising juniors may apply.",
+            "operator": "one_of",
+            "values": [
+              "rising senior",
+              "rising junior"
+            ],
+            "origin": "scanner",
+            "note": "Exception for combined BS/MS program applicants."
+          },
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "A minimum GPA of 3.5 is required.",
+            "operator": "minimum",
+            "values": [
+              "3.5"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "standing",
+            "reason": "condition contains an exception, alternative or discretionary wording"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "rising-junior-bsms-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: condition contains an exception, alternative or discretionary wording"
+        },
+        {
+          "kind": "gpa",
+          "mandatory": true,
+          "operator": "minimum",
+          "values": [
+            "3.5"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 9.19
+    },
+    {
+      "case": "H-nested-exception",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "Candidates must be rising seniors, unless they are enrolled in a combined BS/MS program, in which case rising juniors may apply.",
+            "operator": "one_of",
+            "values": [
+              "rising senior",
+              "rising junior"
+            ],
+            "origin": "scanner",
+            "note": "Exception for combined BS/MS program applicants."
+          },
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "A minimum GPA of 3.5 is required.",
+            "operator": "minimum",
+            "values": [
+              "3.5"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "standing",
+            "reason": "condition contains an exception, alternative or discretionary wording"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "rising-junior-bsms-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: condition contains an exception, alternative or discretionary wording"
+        },
+        {
+          "kind": "gpa",
+          "mandatory": true,
+          "operator": "minimum",
+          "values": [
+            "3.5"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.4
+    },
+    {
+      "case": "I-preferred-not-required",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "gpa",
+            "mandatory": false,
+            "quote": "A GPA of 3.5 or higher is preferred but not required.",
+            "operator": "minimum",
+            "values": [
+              "3.5"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "standing",
+            "mandatory": false,
+            "quote": "Juniors and seniors are preferred.",
+            "operator": "one_of",
+            "values": [
+              "junior",
+              "senior"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": false,
+            "quote": "Strong Excel skills are a plus.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "skills",
+            "reason": "skills rule is not a list"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "low-gpa-sophomore",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "gpa",
+          "mandatory": false,
+          "operator": "minimum",
+          "values": [
+            "3.5"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "standing",
+          "mandatory": false,
+          "operator": "one_of",
+          "values": [
+            "junior",
+            "senior"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": false,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: skills rule is not a list"
+        }
+      ],
+      "seconds": 8.97
+    },
+    {
+      "case": "I-preferred-not-required",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "gpa",
+            "mandatory": false,
+            "quote": "A GPA of 3.5 or higher is preferred but not required.",
+            "operator": "minimum",
+            "values": [
+              "3.5"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "standing",
+            "mandatory": false,
+            "quote": "Juniors and seniors are preferred.",
+            "operator": "one_of",
+            "values": [
+              "junior",
+              "senior"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": false,
+            "quote": "Strong Excel skills are a plus.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "skills",
+            "reason": "skills rule is not a list"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "low-gpa-sophomore",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "gpa",
+          "mandatory": false,
+          "operator": "minimum",
+          "values": [
+            "3.5"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "standing",
+          "mandatory": false,
+          "operator": "one_of",
+          "values": [
+            "junior",
+            "senior"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": false,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: skills rule is not a list"
+        }
+      ],
+      "seconds": 8.47
+    },
+    {
+      "case": "I-preferred-not-required",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "gpa",
+            "mandatory": false,
+            "quote": "A GPA of 3.5 or higher is preferred but not required.",
+            "operator": "minimum",
+            "values": [
+              "3.5"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "standing",
+            "mandatory": false,
+            "quote": "Juniors and seniors are preferred.",
+            "operator": "one_of",
+            "values": [
+              "junior",
+              "senior"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": false,
+            "quote": "Strong Excel skills are a plus.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "skills",
+            "reason": "skills rule is not a list"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "low-gpa-sophomore",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "gpa",
+          "mandatory": false,
+          "operator": "minimum",
+          "values": [
+            "3.5"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "standing",
+          "mandatory": false,
+          "operator": "one_of",
+          "values": [
+            "junior",
+            "senior"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": false,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: skills rule is not a list"
+        }
+      ],
+      "seconds": 9.51
+    },
+    {
+      "case": "J-gpa-other-scale",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "Applicants must hold a minimum GPA of 8.0 on a 10-point scale.",
+            "operator": "minimum",
+            "values": [
+              "8.0"
+            ],
+            "origin": "model",
+            "note": "GPA is on a 10-point scale, not the standard 0-4 scale."
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be graduating between May 2028 and May 2029.",
+            "operator": "between",
+            "values": [
+              "2028-05-01",
+              "2029-05-31"
+            ],
+            "origin": "model",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "gpa",
+            "reason": "GPA outside the 4.0 scale"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "gpa-3.9-grad-ok",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: GPA outside the 4.0 scale"
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-05-01",
+            "2029-05-31"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 10.27
+    },
+    {
+      "case": "J-gpa-other-scale",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "Applicants must hold a minimum GPA of 8.0 on a 10-point scale.",
+            "operator": "minimum",
+            "values": [
+              "8.0"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be graduating between May 2028 and May 2029.",
+            "operator": "between",
+            "values": [
+              "2028-05-01",
+              "2029-05-31"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "gpa",
+            "reason": "GPA outside the 4.0 scale"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "gpa-3.9-grad-ok",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: GPA outside the 4.0 scale"
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-05-01",
+            "2029-05-31"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 9.14
+    },
+    {
+      "case": "J-gpa-other-scale",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "Applicants must hold a minimum GPA of 8.0 on a 10-point scale.",
+            "operator": "minimum",
+            "values": [
+              "8.0"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be graduating between May 2028 and May 2029.",
+            "operator": "between",
+            "values": [
+              "2028-05-01",
+              "2029-05-31"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "gpa",
+            "reason": "GPA outside the 4.0 scale"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "gpa-3.9-grad-ok",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: GPA outside the 4.0 scale"
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-05-01",
+            "2029-05-31"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.05
+    },
+    {
+      "case": "K-buried-footnote",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Applicants must be graduating between December 2027 and June 2028.",
+            "operator": "between",
+            "values": [
+              "2027-12-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Due to government contract requirements, applicants must be able to obtain a U.S. security clearance.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "work_authorization",
+            "reason": "quote does not mention work authorization"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "grad-ok",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2027-12-01",
+            "2028-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: quote does not mention work authorization"
+        }
+      ],
+      "seconds": 8.1
+    },
+    {
+      "case": "K-buried-footnote",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Applicants must be graduating between December 2027 and June 2028.",
+            "operator": "between",
+            "values": [
+              "2027-12-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Due to government contract requirements, applicants must be able to obtain a U.S. security clearance.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "work_authorization",
+            "reason": "quote does not mention work authorization"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "grad-ok",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2027-12-01",
+            "2028-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: quote does not mention work authorization"
+        }
+      ],
+      "seconds": 8.03
+    },
+    {
+      "case": "K-buried-footnote",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Applicants must be graduating between December 2027 and June 2028.",
+            "operator": "between",
+            "values": [
+              "2027-12-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Due to government contract requirements, applicants must be able to obtain a U.S. security clearance.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "work_authorization",
+            "reason": "quote does not mention work authorization"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "grad-ok",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2027-12-01",
+            "2028-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: quote does not mention work authorization"
+        }
+      ],
+      "seconds": 8.03
+    },
+    {
+      "case": "L-contradictory-windows",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Applicants must graduate between May 2028 and June 2028.",
+            "operator": "between",
+            "values": [
+              "2028-05-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Eligibility: candidates must graduate between May 2030 and June 2030.",
+            "operator": "between",
+            "values": [
+              "2030-05-01",
+              "2030-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [
+          "graduation windows do not overlap"
+        ],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 0,
+      "gold_n": 0,
+      "fp": 0,
+      "got_n": 0,
+      "decisions": [
+        {
+          "profile": "grad-2028",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Posting states conflicting graduation windows"
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Posting states conflicting graduation windows"
+        }
+      ],
+      "seconds": 9.08
+    },
+    {
+      "case": "L-contradictory-windows",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Applicants must graduate between May 2028 and June 2028.",
+            "operator": "between",
+            "values": [
+              "2028-05-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Eligibility: candidates must graduate between May 2030 and June 2030.",
+            "operator": "between",
+            "values": [
+              "2030-05-01",
+              "2030-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [
+          "graduation windows do not overlap"
+        ],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 0,
+      "gold_n": 0,
+      "fp": 0,
+      "got_n": 0,
+      "decisions": [
+        {
+          "profile": "grad-2028",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Posting states conflicting graduation windows"
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Posting states conflicting graduation windows"
+        }
+      ],
+      "seconds": 10.92
+    },
+    {
+      "case": "L-contradictory-windows",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Applicants must graduate between May 2028 and June 2028.",
+            "operator": "between",
+            "values": [
+              "2028-05-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Eligibility: candidates must graduate between May 2030 and June 2030.",
+            "operator": "between",
+            "values": [
+              "2030-05-01",
+              "2030-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [
+          "graduation windows do not overlap"
+        ],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 0,
+      "gold_n": 0,
+      "fp": 0,
+      "got_n": 0,
+      "decisions": [
+        {
+          "profile": "grad-2028",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Posting states conflicting graduation windows"
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Posting states conflicting graduation windows"
+        }
+      ],
+      "seconds": 10.79
+    },
+    {
+      "case": "M-all-class-years",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": false,
+            "quote": "Open to students of all class years, from freshmen to seniors.",
+            "operator": "one_of",
+            "values": [
+              "freshman",
+              "rising sophomore",
+              "sophomore",
+              "rising junior",
+              "junior",
+              "rising senior",
+              "senior"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Knowledge of Java is required.",
+            "operator": "all_of",
+            "values": [
+              "Java"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "standing",
+            "reason": "standing 'rising sophomore' does not appear in the quote"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 2,
+      "gold_n": 3,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "authorized-java-standing-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": false,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: standing 'rising sophomore' does not appear in the quote"
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "Java"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 10.35
+    },
+    {
+      "case": "M-all-class-years",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "Open to students of all class years, from freshmen to seniors.",
+            "operator": "one_of",
+            "values": [
+              "freshman",
+              "rising sophomore",
+              "sophomore",
+              "rising junior",
+              "junior",
+              "rising senior",
+              "senior"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Knowledge of Java is required.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "standing",
+            "reason": "standing 'rising sophomore' does not appear in the quote"
+          },
+          {
+            "kind": "skills",
+            "reason": "skills rule is not a list"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 1,
+      "gold_n": 3,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "authorized-java-standing-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: standing 'rising sophomore' does not appear in the quote"
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: skills rule is not a list"
+        }
+      ],
+      "seconds": 9.84
+    },
+    {
+      "case": "M-all-class-years",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "Open to students of all class years, from freshmen to seniors.",
+            "operator": "one_of",
+            "values": [
+              "freshman",
+              "rising sophomore",
+              "sophomore",
+              "rising junior",
+              "junior",
+              "rising senior",
+              "senior"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Knowledge of Java is required.",
+            "operator": "unspecified",
+            "values": [],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "standing",
+            "reason": "standing 'rising sophomore' does not appear in the quote"
+          },
+          {
+            "kind": "skills",
+            "reason": "skills rule is not a list"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 1,
+      "gold_n": 3,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "authorized-java-standing-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: standing 'rising sophomore' does not appear in the quote"
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: skills rule is not a list"
+        }
+      ],
+      "seconds": 10.16
+    },
+    {
+      "case": "N-degree-masters-only",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "degree",
+            "mandatory": true,
+            "quote": "Must be currently enrolled in a Master's or PhD program in Computer Science.",
+            "operator": "one_of",
+            "values": [
+              "Master's",
+              "PhD"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "bachelors-student",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "degree",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "Master's",
+            "PhD"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.41
+    },
+    {
+      "case": "N-degree-masters-only",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "degree",
+            "mandatory": true,
+            "quote": "Must be currently enrolled in a Master's or PhD program in Computer Science.",
+            "operator": "one_of",
+            "values": [
+              "Master's",
+              "PhD"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "bachelors-student",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "degree",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "Master's",
+            "PhD"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 7.72
+    },
+    {
+      "case": "N-degree-masters-only",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "degree",
+            "mandatory": true,
+            "quote": "Must be currently enrolled in a Master's or PhD program in Computer Science.",
+            "operator": "one_of",
+            "values": [
+              "Master's",
+              "PhD"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "bachelors-student",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "degree",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "Master's",
+            "PhD"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 11.83
+    },
+    {
+      "case": "O-class-of",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "This program is for members of the Class of 2028 who will graduate between December 2027 and June 2028.",
+            "operator": "between",
+            "values": [
+              "2027-12-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "A minimum cumulative GPA of 3.3 is required.",
+            "operator": "minimum",
+            "values": [
+              "3.3"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Candidates must be authorized to work in the U.S. without sponsorship now or in the future.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "sponsorship",
+            "mandatory": true,
+            "quote": "Candidates must be authorized to work in the U.S. without sponsorship now or in the future.",
+            "operator": "equals",
+            "values": [
+              "false"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {
+          "title": "Summer 2027 Investment Banking Analyst Intern\nWoodgrove Bank",
+          "graduation_quote": "This program is for members of the Class of 2028 who will graduate between December 2027 and June 2028.",
+          "gpa_quote": "A minimum cumulative GPA of 3.3 is required.",
+          "work_authorization_quote": "Candidates must be authorized to work in the U.S. without sponsorship now or in the future."
+        }
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 4,
+      "gold_n": 4,
+      "fp": 0,
+      "got_n": 4,
+      "decisions": [
+        {
+          "profile": "all-satisfied",
+          "expected": "Verified Eligible",
+          "got": "Verified Eligible"
+        },
+        {
+          "profile": "gpa-low",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2027-12-01",
+            "2028-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "gpa",
+          "mandatory": true,
+          "operator": "minimum",
+          "values": [
+            "3.3"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "sponsorship",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "false"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 21.93
+    },
+    {
+      "case": "O-class-of",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "This program is for members of the Class of 2028 who will graduate between December 2027 and June 2028.",
+            "operator": "between",
+            "values": [
+              "2027-12-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "A minimum cumulative GPA of 3.3 is required.",
+            "operator": "minimum",
+            "values": [
+              "3.3"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Candidates must be authorized to work in the U.S. without sponsorship now or in the future.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "sponsorship",
+            "mandatory": true,
+            "quote": "Candidates must be authorized to work in the U.S. without sponsorship now or in the future.",
+            "operator": "equals",
+            "values": [
+              "false"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {
+          "title": "Summer 2027 Investment Banking Analyst Intern\nWoodgrove Bank",
+          "graduation_quote": "This program is for members of the Class of 2028 who will graduate between December 2027 and June 2028.",
+          "gpa_quote": "A minimum cumulative GPA of 3.3 is required.",
+          "work_authorization_quote": "Candidates must be authorized to work in the U.S. without sponsorship now or in the future."
+        }
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 4,
+      "gold_n": 4,
+      "fp": 0,
+      "got_n": 4,
+      "decisions": [
+        {
+          "profile": "all-satisfied",
+          "expected": "Verified Eligible",
+          "got": "Verified Eligible"
+        },
+        {
+          "profile": "gpa-low",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2027-12-01",
+            "2028-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "gpa",
+          "mandatory": true,
+          "operator": "minimum",
+          "values": [
+            "3.3"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "sponsorship",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "false"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 23.66
+    },
+    {
+      "case": "O-class-of",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "This program is for members of the Class of 2028 who will graduate between December 2027 and June 2028.",
+            "operator": "between",
+            "values": [
+              "2027-12-01",
+              "2028-06-30"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "gpa",
+            "mandatory": true,
+            "quote": "A minimum cumulative GPA of 3.3 is required.",
+            "operator": "minimum",
+            "values": [
+              "3.3"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Candidates must be authorized to work in the U.S. without sponsorship now or in the future.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "sponsorship",
+            "mandatory": true,
+            "quote": "Candidates must be authorized to work in the U.S. without sponsorship now or in the future.",
+            "operator": "equals",
+            "values": [
+              "false"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {
+          "title": "Summer 2027 Investment Banking Analyst Intern\nWoodgrove Bank",
+          "graduation_quote": "This program is for members of the Class of 2028 who will graduate between December 2027 and June 2028.",
+          "gpa_quote": "A minimum cumulative GPA of 3.3 is required.",
+          "work_authorization_quote": "Candidates must be authorized to work in the U.S. without sponsorship now or in the future."
+        }
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 4,
+      "gold_n": 4,
+      "fp": 0,
+      "got_n": 4,
+      "decisions": [
+        {
+          "profile": "all-satisfied",
+          "expected": "Verified Eligible",
+          "got": "Verified Eligible"
+        },
+        {
+          "profile": "gpa-low",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2027-12-01",
+            "2028-06-30"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "gpa",
+          "mandatory": true,
+          "operator": "minimum",
+          "values": [
+            "3.3"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "sponsorship",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "false"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 16.45
+    },
+    {
+      "case": "P-skills-only",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Required: JavaScript and React.",
+            "operator": "all_of",
+            "values": [
+              "JavaScript",
+              "React"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": false,
+            "quote": "Nice to have: TypeScript.",
+            "operator": "one_of",
+            "values": [
+              "TypeScript"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "has-skills",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "JavaScript",
+            "React"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "skills",
+          "mandatory": false,
+          "operator": "one_of",
+          "values": [
+            "TypeScript"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 7.56
+    },
+    {
+      "case": "P-skills-only",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Required: JavaScript and React.",
+            "operator": "all_of",
+            "values": [
+              "JavaScript",
+              "React"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": false,
+            "quote": "Nice to have: TypeScript.",
+            "operator": "one_of",
+            "values": [
+              "TypeScript"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "has-skills",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "JavaScript",
+            "React"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "skills",
+          "mandatory": false,
+          "operator": "one_of",
+          "values": [
+            "TypeScript"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 7.34
+    },
+    {
+      "case": "P-skills-only",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "skills",
+            "mandatory": true,
+            "quote": "Required: JavaScript and React.",
+            "operator": "all_of",
+            "values": [
+              "JavaScript",
+              "React"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "skills",
+            "mandatory": false,
+            "quote": "Nice to have: TypeScript.",
+            "operator": "one_of",
+            "values": [
+              "TypeScript"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "has-skills",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "skills",
+          "mandatory": true,
+          "operator": "all_of",
+          "values": [
+            "JavaScript",
+            "React"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "skills",
+          "mandatory": false,
+          "operator": "one_of",
+          "values": [
+            "TypeScript"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 7.56
+    },
+    {
+      "case": "Q-injection-fake-pass",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be graduating between May 2028 and May 2029.",
+            "operator": "between",
+            "values": [
+              "2028-05-01",
+              "2029-05-31"
+            ],
+            "origin": "model",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "model",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "grad-ok-auth-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-05-01",
+            "2029-05-31"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.55
+    },
+    {
+      "case": "Q-injection-fake-pass",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be graduating between May 2028 and May 2029.",
+            "operator": "between",
+            "values": [
+              "May 2028",
+              "May 2029"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [
+          {
+            "kind": "graduation",
+            "reason": "graduation bounds are not ISO dates"
+          }
+        ],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 1,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "grad-ok-auth-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "other",
+          "mandatory": true,
+          "operator": "unspecified",
+          "values": [],
+          "origin": "model",
+          "note": "Needs manual review: graduation bounds are not ISO dates"
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.26
+    },
+    {
+      "case": "Q-injection-fake-pass",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be graduating between May 2028 and May 2029.",
+            "operator": "between",
+            "values": [
+              "2028-05-01",
+              "2029-05-31"
+            ],
+            "origin": "model",
+            "note": null
+          },
+          {
+            "kind": "work_authorization",
+            "mandatory": true,
+            "quote": "Must be authorized to work in the United States.",
+            "operator": "equals",
+            "values": [
+              "true"
+            ],
+            "origin": "model",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "grad-ok-auth-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-05-01",
+            "2029-05-31"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "work_authorization",
+          "mandatory": true,
+          "operator": "equals",
+          "values": [
+            "true"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.24
+    },
+    {
+      "case": "R-term-specific-start",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "Open to rising sophomores and rising juniors.",
+            "operator": "one_of",
+            "values": [
+              "rising sophomore",
+              "rising junior"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": false,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": "2027-06-07",
+        "internship_end": "2027-08-13",
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {
+          "title": "Summer 2027 Operations Intern",
+          "organization": "Graphic Design Institute",
+          "start_date": "June 7, 2027",
+          "end_date": "August 13, 2027",
+          "eligibility": "Open to rising sophomores and rising juniors."
+        }
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_start",
+          "internship_end",
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": false,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "rising-sophomore-summer-2027",
+          "expected": "Verified Eligible",
+          "got": "Potentially Eligible"
+        },
+        {
+          "profile": "rising-senior-summer-2027",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "standing",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "rising sophomore",
+            "rising junior"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 8.88
+    },
+    {
+      "case": "R-term-specific-start",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "Open to rising sophomores and rising juniors.",
+            "operator": "one_of",
+            "values": [
+              "rising sophomore",
+              "rising junior"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": "2027-06-07",
+        "internship_end": "2027-08-13",
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_start",
+          "internship_end",
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "rising-sophomore-summer-2027",
+          "expected": "Verified Eligible",
+          "got": "Verified Eligible"
+        },
+        {
+          "profile": "rising-senior-summer-2027",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "standing",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "rising sophomore",
+            "rising junior"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 6.53
+    },
+    {
+      "case": "R-term-specific-start",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "standing",
+            "mandatory": true,
+            "quote": "Open to rising sophomores and rising juniors.",
+            "operator": "one_of",
+            "values": [
+              "rising sophomore",
+              "rising junior"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": "2027-06-07",
+        "internship_end": "2027-08-13",
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_start",
+          "internship_end",
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 1,
+      "gold_n": 1,
+      "fp": 0,
+      "got_n": 1,
+      "decisions": [
+        {
+          "profile": "rising-sophomore-summer-2027",
+          "expected": "Verified Eligible",
+          "got": "Verified Eligible"
+        },
+        {
+          "profile": "rising-senior-summer-2027",
+          "expected": "Ineligible",
+          "got": "Ineligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "standing",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "rising sophomore",
+            "rising junior"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 6.31
+    },
+    {
+      "case": "S-citizen-or-permanent-resident",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "citizenship",
+            "mandatory": true,
+            "quote": "Applicants must be U.S. citizens or lawful permanent residents.",
+            "operator": "one_of",
+            "values": [
+              "U.S. citizens",
+              "lawful permanent residents"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be enrolled in an undergraduate program graduating between May 2028 and May 2030.",
+            "operator": "between",
+            "values": [
+              "2028-05-01",
+              "2030-05-31"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "grad-ok-citizenship-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "citizenship",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "U.S. citizens",
+            "lawful permanent residents"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-05-01",
+            "2030-05-31"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 9.3
+    },
+    {
+      "case": "S-citizen-or-permanent-resident",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "citizenship",
+            "mandatory": true,
+            "quote": "Applicants must be U.S. citizens or lawful permanent residents.",
+            "operator": "one_of",
+            "values": [
+              "U.S. citizens",
+              "lawful permanent residents"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be enrolled in an undergraduate program graduating between May 2028 and May 2030.",
+            "operator": "between",
+            "values": [
+              "2028-05-01",
+              "2030-05-31"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "grad-ok-citizenship-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "citizenship",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "U.S. citizens",
+            "lawful permanent residents"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-05-01",
+            "2030-05-31"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 9.2
+    },
+    {
+      "case": "S-citizen-or-permanent-resident",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [
+          {
+            "kind": "citizenship",
+            "mandatory": true,
+            "quote": "Applicants must be U.S. citizens or lawful permanent residents.",
+            "operator": "one_of",
+            "values": [
+              "U.S. citizens",
+              "lawful permanent residents"
+            ],
+            "origin": "scanner",
+            "note": null
+          },
+          {
+            "kind": "graduation",
+            "mandatory": true,
+            "quote": "Must be enrolled in an undergraduate program graduating between May 2028 and May 2030.",
+            "operator": "between",
+            "values": [
+              "2028-05-01",
+              "2030-05-31"
+            ],
+            "origin": "scanner",
+            "note": null
+          }
+        ],
+        "complete": true,
+        "academic_scope_explicit": true,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": "Summer 2027",
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [
+          "internship_term"
+        ],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": "Summer 2027",
+      "complete": true,
+      "start": null,
+      "tp": 2,
+      "gold_n": 2,
+      "fp": 0,
+      "got_n": 2,
+      "decisions": [
+        {
+          "profile": "grad-ok-citizenship-unknown",
+          "expected": "Potentially Eligible",
+          "got": "Potentially Eligible"
+        }
+      ],
+      "requirements": [
+        {
+          "kind": "citizenship",
+          "mandatory": true,
+          "operator": "one_of",
+          "values": [
+            "U.S. citizens",
+            "lawful permanent residents"
+          ],
+          "origin": "model",
+          "note": null
+        },
+        {
+          "kind": "graduation",
+          "mandatory": true,
+          "operator": "between",
+          "values": [
+            "2028-05-01",
+            "2030-05-31"
+          ],
+          "origin": "model",
+          "note": null
+        }
+      ],
+      "seconds": 11.3
+    },
+    {
+      "case": "T-no-stated-requirements",
+      "attempt": 0,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [],
+        "complete": false,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": false,
+      "start": null,
+      "tp": 0,
+      "gold_n": 0,
+      "fp": 0,
+      "got_n": 0,
+      "decisions": [
+        {
+          "profile": "any",
+          "expected": "Unverified",
+          "got": "Unverified"
+        }
+      ],
+      "requirements": [],
+      "seconds": 6.51
+    },
+    {
+      "case": "T-no-stated-requirements",
+      "attempt": 1,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [],
+        "complete": false,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": false,
+      "start": null,
+      "tp": 0,
+      "gold_n": 0,
+      "fp": 0,
+      "got_n": 0,
+      "decisions": [
+        {
+          "profile": "any",
+          "expected": "Unverified",
+          "got": "Unverified"
+        }
+      ],
+      "requirements": [],
+      "seconds": 4.73
+    },
+    {
+      "case": "T-no-stated-requirements",
+      "attempt": 2,
+      "model": "ollama:qwen3.5:9b@d63f830f28d5",
+      "raw": {
+        "requirements": [],
+        "complete": false,
+        "academic_scope_explicit": false,
+        "compensation": null,
+        "deadline": null,
+        "internship_start": null,
+        "internship_end": null,
+        "work_arrangement": null,
+        "posting_date": null,
+        "internship_term": null,
+        "opportunity_type": "internship",
+        "metadata_evidence": {}
+      },
+      "outcome": "ok",
+      "report": {
+        "validator_version": "1.0.0",
+        "downgraded": [],
+        "unreviewed_signals": 0,
+        "metadata_dropped": [],
+        "contradictions": [],
+        "source_incomplete": false
+      },
+      "term": null,
+      "complete": false,
+      "start": null,
+      "tp": 0,
+      "gold_n": 0,
+      "fp": 0,
+      "got_n": 0,
+      "decisions": [
+        {
+          "profile": "any",
+          "expected": "Unverified",
+          "got": "Unverified"
+        }
+      ],
+      "requirements": [],
+      "seconds": 3.79
+    }
+  ]
+}
